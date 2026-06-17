@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caixa de ferramentas · TCC, TDAH, autismo, emoções</title>
+<style>
+  :root{--bg:#f6f3ee;--card:#fffdf9;--ink:#3b3a36;--soft:#7a766e;--line:#e7e1d6;
+    --accent:#8aa79a;--accent-deep:#5f7d70;--warm:#d8a48f;--warm-deep:#b97f68;--sky:#9bb0c4;
+    --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05)}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  header{padding:32px 20px 8px;text-align:center;max-width:760px;margin:0 auto}
+  header h1{font-size:1.45rem;font-weight:600;margin:0 0 4px}
+  header p{color:var(--soft);margin:0;font-size:.92rem}
+  a.home{color:var(--accent-deep);font-size:.85rem}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 80px}
+  nav{display:flex;gap:6px;overflow-x:auto;padding:14px 4px;position:sticky;top:0;background:linear-gradient(var(--bg),var(--bg) 75%,transparent);z-index:5}
+  nav a{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--soft);padding:8px 13px;border-radius:999px;font-size:.82rem;text-decoration:none;white-space:nowrap}
+  section.block{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin:16px 0;box-shadow:var(--shadow)}
+  section.block>h2{font-size:1.18rem;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+  .sub{color:var(--soft);font-size:.9rem;margin:0 0 12px}
+  .tool{border-top:1px solid var(--line);padding:14px 0}
+  .tool:first-of-type{border-top:none}
+  .tool h3{margin:0 0 4px;font-size:1rem}
+  .tool p{margin:0 0 6px;font-size:.92rem}
+  .tool .how{background:#f3ece6;border-radius:9px;padding:9px 12px;font-size:.86rem;color:#5b574f}
+  ol.steps{margin:6px 0 0;padding-left:20px;font-size:.88rem}
+  ol.steps li{margin:4px 0}
+  .pill{display:inline-block;background:var(--accent-deep);color:#fff;font-size:.7rem;border-radius:6px;padding:2px 8px;margin-left:4px;vertical-align:middle}
+  .accent-bar{height:4px;border-radius:4px;width:44px;margin-bottom:10px}
+  .b1{background:var(--accent)}.b2{background:var(--sky)}.b3{background:var(--warm)}.b4{background:var(--warm-deep)}
+  .note{background:#eef2ef;border-radius:10px;padding:12px 14px;font-size:.85rem;color:var(--soft);margin-top:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Minha caixa de ferramentas</h1>
+  <p>Técnicas com base científica, em formato de bolso. Para os dias entre as sessões.</p>
+  <p style="margin-top:6px"><a class="home" href="index.html">← voltar ao início</a></p>
+</header>
+<div class="wrap">
+  <nav>
+    <a href="#tcc">🧠 TCC</a>
+    <a href="#tdah">⚡ TDAH</a>
+    <a href="#autismo">🌊 Autismo / energia social</a>
+    <a href="#dbt">🌡️ Emoções (DBT)</a>
+    <a href="#rsd">💬 Rejeição (RSD)</a>
+  </nav>
+
+  <!-- TCC -->
+  <section class="block" id="tcc">
+    <div class="accent-bar b1"></div>
+    <h2>🧠 TCC — Terapia Cognitivo-Comportamental</h2>
+    <p class="sub">A ideia central: não são os eventos que nos derrubam, mas a interpretação deles. A TCC treina pegar essa interpretação no flagrante.</p>
+
+    <div class="tool">
+      <h3>Registro de pensamento <span class="pill">no diário</span></h3>
+      <p>A ferramenta nº 1 quando a mente gruda numa ameaça. Separa o fato da interpretação.</p>
+      <div class="how">Situação (só fatos) → emoção (0–100%) → pensamento automático → evidências a favor → evidências contra → pensamento mais equilibrado → reavaliar a emoção.</div>
+    </div>
+
+    <div class="tool">
+      <h3>Ativação comportamental</h3>
+      <p>Na depressão, a vontade vem <em>depois</em> da ação, não antes. Esperar "ter ânimo" prende no ciclo. Então agenda-se a atividade mesmo sem vontade.</p>
+      <div class="how">Liste 3 atividades pequenas de <strong>prazer</strong> e 3 de <strong>realização</strong>. Agende uma por dia, pequena o bastante pra não dar pra recusar (ex.: "regar uma planta", "5 min de caminhada").</div>
+    </div>
+
+    <div class="tool">
+      <h3>Exposição gradual <span class="pill">ansiedade social</span></h3>
+      <p>Evitar alivia agora e piora depois — ensina o cérebro que a situação era mesmo perigosa. A exposição em degraus desfaz isso.</p>
+      <ol class="steps">
+        <li>Liste situações sociais temidas e dê uma nota de ansiedade (0–100) a cada.</li>
+        <li>Ordene da mais fácil à mais difícil.</li>
+        <li>Enfrente a mais fácil, repetidas vezes, até a ansiedade cair pela metade. Só então suba um degrau.</li>
+        <li>Antes, anote sua previsão catastrófica. Depois, compare com o que de fato aconteceu.</li>
+      </ol>
+    </div>
+
+    <div class="tool">
+      <h3>Reestruturação cognitiva — perguntas-chave</h3>
+      <div class="how">• Qual a evidência real disso? • Existe outra explicação? • O que eu diria a uma amiga nessa situação? • Qual a pior coisa, a melhor, e a mais provável? • Isso vai importar em 5 anos?</div>
+    </div>
+  </section>
+
+  <!-- TDAH -->
+  <section class="block" id="tdah">
+    <div class="accent-bar b2"></div>
+    <h2>⚡ TDAH — estratégias práticas</h2>
+    <p class="sub">Princípio (Russell Barkley): TDAH não é falta de conhecimento, é dificuldade de <strong>autorregulação no tempo</strong>. A solução não é "esforçar-se mais por dentro" — é <strong>externalizar</strong> para fora da cabeça.</p>
+
+    <div class="tool">
+      <h3>Externalizar tudo</h3>
+      <p>O que está só na cabeça não existe pro cérebro TDAH. Tire pra fora.</p>
+      <div class="how">Listas <strong>visíveis</strong> (não em app escondido), alarmes para cada compromisso, objetos no caminho como lembrete. O ambiente faz o trabalho da memória.</div>
+    </div>
+
+    <div class="tool">
+      <h3>Tempo cego (time blindness)</h3>
+      <p>O cérebro TDAH só enxerga "agora" e "não-agora". Prazos futuros não geram urgência até virarem crise.</p>
+      <div class="how">Torne o tempo <strong>visível</strong>: timer/ampulheta à vista. E <strong>dobre</strong> toda estimativa de tempo — se acha que leva 30 min, reserve 60.</div>
+    </div>
+
+    <div class="tool">
+      <h3>Body doubling</h3>
+      <p>Fazer a tarefa na presença (real ou por chamada) de outra pessoa. A presença sustenta o foco sem cobrança.</p>
+      <div class="how">Marque com alguém, ou use vídeos/lives de "trabalhe comigo". Você não precisa de ajuda na tarefa — só de companhia.</div>
+    </div>
+
+    <div class="tool">
+      <h3>Regra dos 2 minutos + redução de fricção</h3>
+      <div class="how">Se leva menos de 2 min, faça já. Para tarefas grandes: deixe o <strong>primeiro passo absurdamente fácil</strong> (tênis ao lado da cama, aba já aberta) e afaste as distrações (celular em outro cômodo). Vencer a inércia inicial é metade da batalha.</div>
+    </div>
+    <div class="note">Atenção: muitos desses sintomas também aparecem na ansiedade/depressão. Por isso o teste de triagem pede pra você pensar na <em>vida toda</em>, não só agora.</div>
+  </section>
+
+  <!-- AUTISMO -->
+  <section class="block" id="autismo">
+    <div class="accent-bar b3"></div>
+    <h2>🌊 Autismo / mascaramento / energia social</h2>
+    <p class="sub">Mesmo sem diagnóstico fechado: se você se cansa com interações e sente que "performa" o tempo todo, estas ferramentas valem.</p>
+
+    <div class="tool">
+      <h3>Teoria das Colheres (Spoon Theory)</h3>
+      <p>Você acorda com um número finito de "colheres" de energia. Cada demanda (reunião, interação, decisão, ruído) gasta colheres. Quando acabam, acabou — e forçar custa caro no dia seguinte.</p>
+      <div class="how">De manhã, estime suas colheres do dia. Antes de aceitar algo, pergunte: "tenho colher pra isso?". <strong>Intercale</strong> demandas sociais com blocos de recuperação. Não é preguiça — é orçamento de energia.</div>
+    </div>
+
+    <div class="tool">
+      <h3>Descompressão planejada</h3>
+      <p>A exaustão pós-social não é fraqueza — é a conta da máscara. Ela precisa ser paga de propósito.</p>
+      <div class="how">Depois de toda interação intensa, reserve um bloco de baixo estímulo: luz baixa, sem falar, sem tela cansativa. Curto e garantido vale mais que longo e adiado.</div>
+    </div>
+
+    <div class="tool">
+      <h3>Tirar a máscara aos poucos (unmasking)</h3>
+      <p>Mascarar o tempo todo é exaustivo e te afasta de você mesma. Não dá (nem é seguro) tirar a máscara em todo lugar — mas dá em alguns.</p>
+      <div class="how">Escolha 1 contexto seguro (sozinha, com o Higor) e pratique deixar de monitorar postura/expressão. Permita stims (balançar o pé, mexer em algo). Repare como o corpo relaxa.</div>
+    </div>
+
+    <div class="tool">
+      <h3>Ajustes sensoriais</h3>
+      <div class="how">Fones com cancelamento de ruído, óculos de sol ou luz mais quente, escolher o canto mais calmo do ambiente, roupas de tecido confortável. Reduzir entrada sensorial sobra energia pro resto.</div>
+    </div>
+  </section>
+
+  <!-- DBT -->
+  <section class="block" id="dbt">
+    <div class="accent-bar b4"></div>
+    <h2>🌡️ Regulação emocional (DBT)</h2>
+    <p class="sub">Habilidades de Marsha Linehan para quando a emoção é grande demais pra raciocinar. Primeiro acalma o corpo, depois a mente.</p>
+
+    <div class="tool">
+      <h3>TIPP — para crise aguda / pânico <span class="pill">no diário · SOS</span></h3>
+      <ol class="steps">
+        <li><strong>T</strong>emperatura: água gelada no rosto / segurar gelo (ativa o reflexo que baixa o batimento).</li>
+        <li><strong>I</strong>ntenso: 1 min de exercício (polichinelo, escada) pra queimar a adrenalina.</li>
+        <li><strong>P</strong>ausada: respiração com expiração mais longa que a inspiração.</li>
+        <li><strong>P</strong>rogressiva: tensione e solte grupos musculares.</li>
+      </ol>
+    </div>
+
+    <div class="tool">
+      <h3>STOP — antes de reagir</h3>
+      <div class="how"><strong>S</strong>top (pare, congele) → <strong>T</strong>ake a step back (recue, respire) → <strong>O</strong>bserve (o que está acontecendo, dentro e fora) → <strong>P</strong>roceed (aja com consciência, não no impulso).</div>
+    </div>
+
+    <div class="tool">
+      <h3>Ação oposta</h3>
+      <p>Quando a emoção não se justifica ou não ajuda, aja no <em>oposto</em> do que ela manda — e ela perde força.</p>
+      <div class="how">Medo manda evitar → aproxime-se devagar. Vergonha manda esconder → mostre-se a quem é seguro. Raiva manda atacar → afaste-se com gentileza. (Útil pra RSD: o impulso é fugir; a ação oposta é ficar e respirar.)</div>
+    </div>
+  </section>
+
+  <!-- RSD -->
+  <section class="block" id="rsd">
+    <div class="accent-bar b1"></div>
+    <h2>💬 Disforia sensível à rejeição (RSD)</h2>
+    <p class="sub">Honestidade científica: a RSD <strong>não é um diagnóstico oficial</strong> (não está no DSM nem na CID) e não existe teste validado para ela. É um termo descritivo, muito usado na clínica de TDAH, para uma dor intensa e desproporcional diante de rejeição percebida. Não dá pra "medir", mas dá pra trabalhar.</p>
+
+    <div class="tool">
+      <h3>O essencial pra lembrar nas crises <span class="pill">no diário · É rejeição?</span></h3>
+      <ol class="steps">
+        <li>A intensidade não é prova de verdade. Dor tamanho 90 ≠ rejeição tamanho 90.</li>
+        <li>A urgência de fugir ou "resolver agora" é o <strong>sintoma</strong>, não a solução.</li>
+        <li>A onda costuma baixar muito em 20–30 min se você não a alimentar com ruminação.</li>
+        <li>Pergunte: que fato observável aconteceu? Que outra explicação existe? Eu diria que uma amiga foi rejeitada nessa mesma situação?</li>
+        <li>Adie a reação, não engula o sentimento. Anote no diário e volte ao assunto com a cabeça fria.</li>
+      </ol>
+    </div>
+    <div class="note">A RSD costuma andar junto com a desregulação emocional (que o DERS mede) — então as ferramentas de DBT acima são suas melhores aliadas práticas aqui.</div>
+  </section>
+
+  <div class="note" style="text-align:center">
+    Base: manuais NHS de TCC, Beck, Russell Barkley (TDAH), National Autistic Society, C. Miserandino (Spoon Theory), Marsha Linehan (DBT), W. Dodson/CHADD (RSD). Apoio e autoconhecimento — não substitui acompanhamento profissional.
+  </div>
+</div>
+</body>
+</html>
