@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autoavaliação · Triagem (não é diagnóstico)</title>
+<style>
+  :root{
+    --bg:#f6f3ee;--card:#fffdf9;--ink:#3b3a36;--soft:#7a766e;--line:#e7e1d6;
+    --accent:#8aa79a;--accent-deep:#5f7d70;--warm:#d8a48f;--warm-deep:#b97f68;
+    --sky:#9bb0c4;--alert:#c98a6a;--shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+  header{padding:32px 20px 8px;text-align:center;max-width:760px;margin:0 auto}
+  header h1{font-size:1.45rem;font-weight:600;margin:0 0 4px}
+  header p{color:var(--soft);margin:0;font-size:.92rem}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 80px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin:16px 0;box-shadow:var(--shadow)}
+  .banner{background:#f3ece6;border:1px solid #e4d3c6;border-radius:14px;padding:16px 18px;margin:16px 0;font-size:.9rem}
+  .banner strong{color:var(--warm-deep)}
+  h2{font-size:1.12rem;margin:0 0 2px}
+  .org{font-size:.78rem;color:var(--soft);text-transform:uppercase;letter-spacing:.5px}
+  .mede{color:var(--soft);font-size:.9rem;margin:8px 0 0}
+  .trad{display:inline-block;font-size:.72rem;border-radius:6px;padding:2px 9px;margin-top:10px}
+  .trad.of{background:#e3ede8;color:var(--accent-deep)}
+  .trad.no{background:#f1e4dc;color:var(--warm-deep)}
+  .enun{font-size:.9rem;font-style:italic;color:var(--soft);margin:14px 0 4px}
+  .item{padding:14px 0;border-top:1px solid var(--line)}
+  .item:first-of-type{border-top:none}
+  .qtext{font-size:.95rem;margin-bottom:9px}
+  .opts{display:flex;flex-wrap:wrap;gap:6px}
+  .opts label{display:flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:8px;padding:7px 11px;font-size:.82rem;cursor:pointer;background:#fff;transition:.12s;color:var(--soft)}
+  .opts label:hover{border-color:var(--accent)}
+  .opts input{accent-color:var(--accent-deep);margin:0}
+  .opts label.sel{background:var(--accent-deep);color:#fff;border-color:var(--accent-deep)}
+  .btn{background:var(--accent-deep);color:#fff;border:none;border-radius:10px;padding:12px 22px;font-size:.95rem;font-weight:600;cursor:pointer}
+  .btn:hover{background:#4f6a5e}
+  .btn.ghost{background:transparent;color:var(--accent-deep);border:1px solid var(--accent)}
+  .result{margin-top:18px;border-radius:12px;padding:16px 18px;font-size:.92rem;display:none}
+  .result.show{display:block}
+  .result.low{background:#e9f0ec;border:1px solid #cfe0d6}
+  .result.mid{background:#f6efe2;border:1px solid #ecdcbf}
+  .result.high{background:#f3e2d8;border:1px solid #e6c3ad}
+  .result .score{font-size:1.4rem;font-weight:700;display:block;margin-bottom:4px}
+  .safety{background:#f6e4dc;border:2px solid var(--alert);border-radius:12px;padding:16px 18px;margin-top:14px;display:none}
+  .safety.show{display:block}
+  .safety strong{color:#a85a3a}
+  nav{display:flex;gap:6px;overflow-x:auto;padding:14px 4px;position:sticky;top:0;background:linear-gradient(var(--bg),var(--bg) 75%,transparent);z-index:5}
+  nav a{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--soft);padding:8px 13px;border-radius:999px;font-size:.82rem;text-decoration:none;white-space:nowrap}
+  .footer-actions{position:sticky;bottom:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;box-shadow:var(--shadow)}
+  .saved{color:var(--accent-deep);font-size:.85rem;opacity:0;transition:.3s}
+  .saved.show{opacity:1}
+  a.home{color:var(--accent-deep);font-size:.85rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>Autoavaliação — uma noção, não um diagnóstico</h1>
+  <p>Questionários de triagem validados, os mesmos usados como primeiro filtro na clínica.</p>
+  <p style="margin-top:6px"><a class="home" href="index.html">← voltar ao início</a></p>
+</header>
+
+<div class="wrap">
+
+  <div class="banner">
+    <strong>Leia antes de começar.</strong> Isto é <strong>triagem (rastreio), não diagnóstico</strong>. Nenhum resultado aqui confirma nada. Um resultado positivo quer dizer apenas "vale a pena buscar uma avaliação profissional" — nunca "você tem X". Só psiquiatra/psicólogo, com sua história completa, fecham diagnóstico.
+  </div>
+
+  <div class="banner" style="background:#f1e8e3;border-color:#e0cabb">
+    <strong>⚠️ Importante para o seu momento:</strong> você está numa fase aguda de ansiedade/depressão e usando metilfenidato (Ritalina). Isso <strong>infla artificialmente</strong> os escores de atenção e regulação — falta de concentração, agitação, fadiga e insônia da ansiedade/depressão se confundem com sintomas de TDAH/autismo. Faça os testes pensando em <strong>"como foi minha vida toda"</strong>, não só nas últimas semanas. E vale <strong>refazer quando estiver mais estável</strong> — guarde os dois resultados para comparar. Leve tudo ao seu psiquiatra.
+  </div>
+
+  <nav>
+    <a href="#asrs">TDAH</a>
+    <a href="#aq10">Autismo (AQ-10)</a>
+    <a href="#raads">Autismo (RAADS)</a>
+    <a href="#catq">Mascaramento</a>
+    <a href="#gad7">Ansiedade</a>
+    <a href="#phq9">Humor</a>
+    <a href="#ders">Emoções</a>
+  </nav>
+
+  <div id="instrumentos"></div>
+
+  <div class="footer-actions">
+    <button class="btn" onclick="copiarResultados()">📋 Copiar resultados (p/ análise)</button>
+    <button class="btn ghost" onclick="salvarResultados()">💾 Salvar histórico</button>
+    <span class="saved" id="savedmsg"></span>
+  </div>
+
+  <div class="banner" style="margin-top:24px;font-size:.82rem;color:var(--soft)">
+    <strong>Tradução:</strong> ASRS, GAD-7 e PHQ-9 usam versões em português brasileiro de uso clínico. AQ-10, RAADS-14, CAT-Q e DERS-16 <strong>não têm versão validada em PT-BR</strong> — os textos são tradução não-oficial, ótima para autoconhecimento, mas não para uso clínico formal. Fontes: OMS/Harvard (ASRS), Autism Research Centre (AQ-10), Eriksson et al. 2013 (RAADS-14), Hull et al. 2019 (CAT-Q), Spitzer/Kroenke (GAD-7/PHQ-9), Bjureberg et al. 2016 (DERS-16).
+  </div>
+</div>
+
+<script>
+const INSTR=[
+{
+  id:'asrs',titulo:'ASRS v1.1 — Atenção / TDAH em adultos',org:'OMS · Harvard',trad:'of',
+  mede:'Sintomas de desatenção e hiperatividade/impulsividade. Use a Parte A (6 itens) como triagem.',
+  enun:'Com que frequência, ao longo da sua vida, você...',
+  escala:['Nunca','Raramente','Algumas vezes','Frequentemente','Muito frequentemente'],
+  itens:[
+    {t:'...sente dificuldade para finalizar os últimos detalhes de uma tarefa, depois de já ter feito as partes mais complicadas?',shade:2},
+    {t:'...sente dificuldade para manter as coisas em ordem quando precisa realizar uma tarefa que exige organização?',shade:2},
+    {t:'...tem problemas para se lembrar de compromissos ou obrigações?',shade:2},
+    {t:'...evita ou atrasa o início de uma tarefa que exige muita concentração?',shade:3},
+    {t:'...fica se mexendo na cadeira ou balançando as mãos ou os pés quando precisa ficar sentado(a) por muito tempo?',shade:3},
+    {t:'...se sente excessivamente ativo(a) e compelido(a) a fazer coisas, como se fosse conduzido(a) por um motor?',shade:3},
+  ],
+  score(r){let c=0;this.itens.forEach((it,i)=>{if(r[i]!=null&&r[i]>=it.shade)c++});return c;},
+  interpret(s){
+    if(s>=4)return{lvl:'high',txt:`<span class="score">${s} de 6 na zona de atenção</span>Triagem <strong>positiva</strong> — seus sintomas podem ser compatíveis com TDAH em adultos. Isso indica que vale conversar com um(a) profissional sobre avaliação formal. Não é diagnóstico.`};
+    return{lvl:'low',txt:`<span class="score">${s} de 6 na zona de atenção</span>Triagem abaixo do limiar (corte = 4). Não descarta nada — se você se reconhece muito nesses padrões ao longo da vida, ainda vale conversar com profissional.`};
+  }
+},
+{
+  id:'aq10',titulo:'AQ-10 — Traços do espectro autista',org:'Baron-Cohen · NICE',trad:'no',
+  mede:'Triagem curta de traços autistas em adultos.',
+  enun:'O quanto você concorda com cada frase?',
+  escala:['Concordo totalmente','Concordo um pouco','Discordo um pouco','Discordo totalmente'],
+  // dir 'agree' => ponto se index 0|1 ; 'disagree' => ponto se index 2|3
+  itens:[
+    {t:'Frequentemente percebo sons baixos que outras pessoas não notam.',dir:'agree'},
+    {t:'Costumo me concentrar mais no quadro geral do que nos pequenos detalhes.',dir:'disagree'},
+    {t:'Acho fácil fazer mais de uma coisa ao mesmo tempo.',dir:'disagree'},
+    {t:'Se há uma interrupção, consigo voltar rapidamente ao que estava fazendo.',dir:'disagree'},
+    {t:'Acho fácil "ler nas entrelinhas" quando alguém fala comigo.',dir:'disagree'},
+    {t:'Sei dizer quando a pessoa que me ouve está ficando entediada.',dir:'disagree'},
+    {t:'Quando leio uma história, tenho dificuldade de entender as intenções dos personagens.',dir:'agree'},
+    {t:'Gosto de colecionar informações sobre categorias de coisas (tipos de carro, de pássaro, de planta...).',dir:'agree'},
+    {t:'Acho fácil descobrir o que alguém pensa ou sente só olhando para o rosto da pessoa.',dir:'disagree'},
+    {t:'Tenho dificuldade de descobrir as intenções das pessoas.',dir:'agree'},
+  ],
+  score(r){let c=0;this.itens.forEach((it,i)=>{if(r[i]==null)return;const ag=r[i]<=1;if((it.dir==='agree'&&ag)||(it.dir==='disagree'&&!ag))c++});return c;},
+  interpret(s){
+    if(s>=6)return{lvl:'high',txt:`<span class="score">${s} de 10</span>Triagem <strong>positiva</strong> (corte = 6). Sugere que vale considerar uma avaliação especializada. Lembre: ansiedade social e mascaramento de longa data podem influenciar as respostas — não é diagnóstico.`};
+    return{lvl:'low',txt:`<span class="score">${s} de 10</span>Abaixo do limiar (corte = 6). Não descarta autismo, principalmente em mulheres, que costumam mascarar muito — combine com o RAADS e o CAT-Q abaixo.`};
+  }
+},
+{
+  id:'raads',titulo:'RAADS-14 — Triagem de autismo adulto',org:'Eriksson et al. 2013',trad:'no',
+  mede:'Mentalização, ansiedade social e reatividade sensorial. Pensado para adultos, inclusive quem mascara.',
+  enun:'O quanto cada frase é verdadeira para você?',
+  escala:['Verdadeiro agora e quando eu era jovem','Verdadeiro só agora','Verdadeiro só quando eu era mais jovem','Nunca verdadeiro'],
+  // weights normal: [3,2,1,0]; item 6 (idx5) reverso
+  itens:[
+    {t:'É difícil para mim entender como as outras pessoas estão se sentindo quando conversamos.'},
+    {t:'Algumas texturas comuns, que não incomodam os outros, são muito desagradáveis quando tocam minha pele.'},
+    {t:'É muito difícil para mim trabalhar e funcionar em grupos.'},
+    {t:'É difícil descobrir o que as outras pessoas esperam de mim.'},
+    {t:'Muitas vezes não sei como agir em situações sociais.'},
+    {t:'Consigo conversar e bater papo informal com as pessoas.',rev:true},
+    {t:'Quando me sinto sobrecarregado(a) pelos sentidos, preciso me isolar para "desligá-los".'},
+    {t:'Como fazer amigos e socializar é um mistério para mim.'},
+    {t:'Quando falo com alguém, tenho dificuldade de saber quando é minha vez de falar ou ouvir.'},
+    {t:'Às vezes preciso cobrir os ouvidos para bloquear ruídos dolorosos (aspirador, pessoas falando demais/alto demais).'},
+    {t:'Pode ser muito difícil interpretar o rosto, as mãos e os movimentos do corpo de alguém durante a conversa.'},
+    {t:'Foco em detalhes em vez de na ideia geral.'},
+    {t:'Levo as coisas ao pé da letra, então muitas vezes não percebo o que as pessoas tentam dizer.'},
+    {t:'Fico extremamente perturbado(a) quando o jeito que gosto de fazer as coisas é mudado de repente.'},
+  ],
+  score(r){let s=0;this.itens.forEach((it,i)=>{if(r[i]==null)return;const w=[3,2,1,0][r[i]];s+=it.rev?(3-w):w});return s;},
+  interpret(s){
+    if(s>=14)return{lvl:'high',txt:`<span class="score">${s} de 42</span>Triagem <strong>positiva</strong> (corte = 14). Este teste é muito sensível (pega quase todo mundo que é autista) mas tem bastante falso-positivo — então significa "vale investigar", não mais que isso.`};
+    return{lvl:'low',txt:`<span class="score">${s} de 42</span>Abaixo do limiar (corte = 14).`};
+  }
+},
+{
+  id:'catq',titulo:'CAT-Q — Mascaramento / camuflagem social',org:'Hull et al. 2019',trad:'no',
+  mede:'O quanto você esconde traços e "performa" socialmente. Mede esforço de camuflagem — muito ligado àquela sensação de "estar sempre performando" e à exaustão depois de interações.',
+  enun:'O quanto você concorda com cada frase?',
+  escala:['Discordo fortemente','Discordo','Discordo um pouco','Neutro','Concordo um pouco','Concordo','Concordo fortemente'],
+  rev:[3,12,19,22,24], // 1-indexed
+  itens:[
+    {t:'Quando interajo com alguém, copio deliberadamente a linguagem corporal ou as expressões faciais da pessoa.'},
+    {t:'Monitoro minha linguagem corporal e expressões faciais para parecer relaxado(a).'},
+    {t:'Raramente sinto necessidade de "fazer um personagem" para atravessar uma situação social.'},
+    {t:'Desenvolvi um roteiro para seguir em situações sociais.'},
+    {t:'Repito frases que ouvi de outras pessoas, exatamente do jeito que ouvi pela primeira vez.'},
+    {t:'Ajusto minha linguagem corporal/expressões para parecer interessado(a) na pessoa com quem interajo.'},
+    {t:'Em situações sociais, sinto que estou "performando" em vez de ser eu mesma.'},
+    {t:'Nas minhas interações, uso comportamentos que aprendi observando outras pessoas.'},
+    {t:'Penso o tempo todo na impressão que causo nos outros.'},
+    {t:'Preciso do apoio de outras pessoas para conseguir socializar.'},
+    {t:'Pratico minhas expressões faciais e linguagem corporal para garantir que pareçam naturais.'},
+    {t:'Não sinto necessidade de manter contato visual com os outros se não quiser.'},
+    {t:'Tenho que me forçar a interagir com as pessoas em situações sociais.'},
+    {t:'Tentei melhorar minha compreensão de habilidades sociais observando outras pessoas.'},
+    {t:'Monitoro minha linguagem corporal/expressões para parecer interessado(a) na pessoa.'},
+    {t:'Em situações sociais, tento encontrar formas de evitar interagir com os outros.'},
+    {t:'Pesquisei as regras das interações sociais para melhorar minhas habilidades sociais.'},
+    {t:'Estou sempre consciente da impressão que causo nos outros.'},
+    {t:'Sinto-me livre para ser eu mesma quando estou com outras pessoas.'},
+    {t:'Aprendo como as pessoas usam o corpo e o rosto para interagir assistindo TV/filmes ou lendo ficção.'},
+    {t:'Ajusto minha linguagem corporal/expressões faciais para parecer relaxado(a).'},
+    {t:'Quando converso, sinto que a conversa flui naturalmente.'},
+    {t:'Passei tempo aprendendo habilidades sociais com TV e filmes, e tento usá-las nas interações.'},
+    {t:'Em interações sociais, não presto atenção ao que meu rosto ou corpo estão fazendo.'},
+    {t:'Em situações sociais, sinto que estou fingindo ser "normal".'},
+  ],
+  score(r){let s=0;this.itens.forEach((it,i)=>{if(r[i]==null)return;let v=r[i]+1;if(this.rev.includes(i+1))v=8-v;s+=v});return s;},
+  interpret(s){
+    if(s>=100)return{lvl:'high',txt:`<span class="score">${s} de 175</span>Acima do corte de camuflagem (≥100). Indica que você investe muita energia "performando" socialmente. Isso explica boa parte da exaustão após interações — e é comum em mulheres autistas não diagnosticadas. Independente de rótulo, mostra um custo real que merece estratégias de descompressão.`};
+    return{lvl:'mid',txt:`<span class="score">${s} de 175</span>Abaixo do corte formal (100), mas qualquer pontuação alta em itens específicos já aponta esforço de mascaramento que vale cuidar.`};
+  }
+},
+{
+  id:'gad7',titulo:'GAD-7 — Ansiedade',org:'Spitzer et al. 2006',trad:'of',
+  mede:'Severidade da ansiedade nas últimas 2 semanas.',
+  enun:'Nas últimas 2 semanas, com que frequência você foi incomodada por...',
+  escala:['Nenhuma vez','Vários dias','Mais da metade dos dias','Quase todos os dias'],
+  itens:[
+    {t:'Sentir-se nervosa, ansiosa ou muito tensa.'},
+    {t:'Não conseguir impedir ou controlar as preocupações.'},
+    {t:'Preocupar-se muito com diversas coisas.'},
+    {t:'Dificuldade para relaxar.'},
+    {t:'Ficar tão agitada que se torna difícil permanecer sentada.'},
+    {t:'Ficar facilmente aborrecida ou irritada.'},
+    {t:'Sentir medo, como se algo terrível fosse acontecer.'},
+  ],
+  score(r){return r.reduce((a,b)=>a+(b||0),0);},
+  interpret(s){
+    if(s>=15)return{lvl:'high',txt:`<span class="score">${s} de 21</span>Ansiedade <strong>grave</strong>. Bate com as crises que você descreveu. Importante levar este número ao psiquiatra — inclusive na conversa sobre a Ritalina.`};
+    if(s>=10)return{lvl:'high',txt:`<span class="score">${s} de 21</span>Ansiedade <strong>moderada</strong>, clinicamente significativa (corte = 10). Vale acompanhamento ativo.`};
+    if(s>=5)return{lvl:'mid',txt:`<span class="score">${s} de 21</span>Ansiedade leve.`};
+    return{lvl:'low',txt:`<span class="score">${s} de 21</span>Ansiedade mínima neste momento.`};
+  }
+},
+{
+  id:'phq9',titulo:'PHQ-9 — Humor / depressão',org:'Kroenke et al. 2001',trad:'of',
+  mede:'Severidade de sintomas depressivos nas últimas 2 semanas.',
+  enun:'Nas últimas 2 semanas, com que frequência você foi incomodada por...',
+  escala:['Nenhuma vez','Vários dias','Mais da metade dos dias','Quase todos os dias'],
+  safetyItem:8, // idx do item 9 (0-based)
+  itens:[
+    {t:'Pouco interesse ou pouco prazer em fazer as coisas.'},
+    {t:'Sentir-se desanimada, deprimida ou sem esperança.'},
+    {t:'Dificuldade para dormir, ou dormir demais.'},
+    {t:'Sentir-se cansada ou com pouca energia.'},
+    {t:'Falta de apetite ou comer demais.'},
+    {t:'Sentir-se mal consigo mesma — um fracasso, ou que decepciona as pessoas próximas.'},
+    {t:'Dificuldade de se concentrar (ler, ver TV...).'},
+    {t:'Mover-se/falar devagar, ou o contrário: muito inquieta e sem conseguir ficar parada.'},
+    {t:'Pensamentos de que seria melhor estar morta, ou de se machucar de alguma forma.'},
+  ],
+  score(r){return r.reduce((a,b)=>a+(b||0),0);},
+  interpret(s){
+    if(s>=20)return{lvl:'high',txt:`<span class="score">${s} de 27</span>Sintomas depressivos <strong>graves</strong>. Por favor, leve isto ao seu psiquiatra com prioridade.`};
+    if(s>=15)return{lvl:'high',txt:`<span class="score">${s} de 27</span>Depressão <strong>moderadamente grave</strong>.`};
+    if(s>=10)return{lvl:'high',txt:`<span class="score">${s} de 27</span>Provável depressão (corte = 10). Você já está em acompanhamento — continue, e mostre este número.`};
+    if(s>=5)return{lvl:'mid',txt:`<span class="score">${s} de 27</span>Sintomas leves.`};
+    return{lvl:'low',txt:`<span class="score">${s} de 27</span>Sintomas mínimos neste momento.`};
+  }
+},
+{
+  id:'ders',titulo:'DERS-16 — Regulação emocional',org:'Bjureberg et al. 2016',trad:'no',
+  mede:'O quanto é difícil lidar com emoções quando você está chateada. Relevante para disforia de rejeição e para a sensação de reações "desproporcionais".',
+  enun:'Indique o quanto cada frase se aplica a você:',
+  escala:['Quase nunca','Às vezes','Metade do tempo','Maior parte do tempo','Quase sempre'],
+  itens:[
+    {t:'Tenho dificuldade de dar sentido aos meus sentimentos.'},
+    {t:'Fico confusa sobre como me sinto.'},
+    {t:'Quando estou chateada, tenho dificuldade de dar conta do trabalho.'},
+    {t:'Quando estou chateada, fico fora de controle.'},
+    {t:'Quando estou chateada, acredito que vou continuar assim por muito tempo.'},
+    {t:'Quando estou chateada, acredito que vou acabar me sentindo muito deprimida.'},
+    {t:'Quando estou chateada, tenho dificuldade de focar em outras coisas.'},
+    {t:'Quando estou chateada, sinto-me fora de controle.'},
+    {t:'Quando estou chateada, sinto vergonha de mim mesma por me sentir assim.'},
+    {t:'Quando estou chateada, sinto que sou fraca.'},
+    {t:'Quando estou chateada, tenho dificuldade de controlar meus comportamentos.'},
+    {t:'Quando estou chateada, acredito que não há nada que eu possa fazer para me sentir melhor.'},
+    {t:'Quando estou chateada, fico irritada comigo mesma por me sentir assim.'},
+    {t:'Quando estou chateada, começo a me sentir muito mal comigo mesma.'},
+    {t:'Quando estou chateada, tenho dificuldade de pensar em qualquer outra coisa.'},
+    {t:'Quando estou chateada, minhas emoções me dominam.'},
+  ],
+  score(r){return r.reduce((a,b)=>a+((b||0)+1),0);},
+  interpret(s){
+    // sem corte clínico oficial; faixas descritivas sobre 16-80
+    if(s>=56)return{lvl:'high',txt:`<span class="score">${s} de 80</span>Dificuldade alta de regulação emocional. Não é um diagnóstico — é um retrato de como as emoções estão te dominando agora. Ótimo número para acompanhar ao longo do tempo e ver as técnicas de DBT fazendo efeito.`};
+    if(s>=36)return{lvl:'mid',txt:`<span class="score">${s} de 80</span>Dificuldade moderada de regulação emocional.`};
+    return{lvl:'low',txt:`<span class="score">${s} de 80</span>Regulação emocional relativamente estável neste momento.`};
+  }
+},
+];
+
+const answers={}; // {instrId:[...]}
+INSTR.forEach(ins=>answers[ins.id]=new Array(ins.itens.length).fill(null));
+
+const root=document.getElementById('instrumentos');
+INSTR.forEach(ins=>{
+  const card=document.createElement('section');card.className='card';card.id=ins.id;
+  card.innerHTML=`
+    <div class="org">${ins.org}</div>
+    <h2>${ins.titulo}</h2>
+    <p class="mede">${ins.mede}</p>
+    <span class="trad ${ins.trad}">${ins.trad==='of'?'versão PT-BR clínica':'tradução não-oficial'}</span>
+    <p class="enun">${ins.enun}</p>
+    <div class="items"></div>
+    <button class="btn" style="margin-top:16px" data-calc="${ins.id}">Ver resultado</button>
+    <div class="result" id="res-${ins.id}"></div>
+    ${ins.id==='phq9'?'<div class="safety" id="safety-phq9"></div>':''}
+  `;
+  const box=card.querySelector('.items');
+  ins.itens.forEach((it,i)=>{
+    const d=document.createElement('div');d.className='item';
+    d.innerHTML=`<div class="qtext">${i+1}. ${it.t}</div>
+      <div class="opts">${ins.escala.map((op,j)=>`
+        <label data-i="${i}" data-j="${j}"><input type="radio" name="${ins.id}_${i}" value="${j}">${op}</label>`).join('')}</div>`;
+    box.appendChild(d);
+  });
+  root.appendChild(card);
+});
+
+// seleção
+document.querySelectorAll('.opts label').forEach(l=>{
+  l.addEventListener('click',()=>{
+    const card=l.closest('.card');const id=card.id;
+    const i=+l.dataset.i,j=+l.dataset.j;
+    answers[id][i]=j;
+    l.parentElement.querySelectorAll('label').forEach(x=>x.classList.remove('sel'));
+    l.classList.add('sel');
+  });
+});
+
+// calcular
+document.querySelectorAll('[data-calc]').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const ins=INSTR.find(x=>x.id===b.dataset.calc);
+    const resp=answers[ins.id];
+    if(resp.some(x=>x==null)){alert('Responda todos os itens deste teste antes de ver o resultado.');return;}
+    const s=ins.score(resp);const r=ins.interpret(s);
+    const el=document.getElementById('res-'+ins.id);
+    el.className='result show '+r.lvl;el.innerHTML=r.txt+`<div style="margin-top:8px;font-size:.78rem;opacity:.8">Triagem, não diagnóstico.</div>`;
+    el.scrollIntoView({behavior:'smooth',block:'center'});
+    // safety check PHQ-9 item 9
+    if(ins.id==='phq9'&&resp[ins.safetyItem]>=1){
+      const sf=document.getElementById('safety-phq9');sf.className='safety show';
+      sf.innerHTML=`<strong>Você marcou pensamentos de morte ou de se machucar.</strong><br>
+      Isso merece atenção agora, independente do total. Você não precisa segurar isso sozinha. Por favor, fale com alguém de confiança hoje, conte ao seu psiquiatra, e se a dor apertar: <strong>CVV — ligue 188</strong> (24h, gratuito e sigiloso) ou <a href="https://www.cvv.org.br/" target="_blank">cvv.org.br</a>. Se houver risco imediato, <strong>SAMU 192</strong>.`;
+    }
+  });
+});
+
+function coletar(){
+  const out=[];
+  INSTR.forEach(ins=>{
+    const resp=answers[ins.id];
+    if(resp.every(x=>x==null))return;
+    if(resp.some(x=>x==null)){out.push(`${ins.titulo}: incompleto`);return;}
+    const s=ins.score(resp);const r=ins.interpret(s);
+    const plain=r.txt.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+    out.push(`• ${ins.titulo}\n  ${plain}`);
+  });
+  return out;
+}
+function salvarResultados(){
+  const data=coletar();if(!data.length){alert('Responda ao menos um teste.');return;}
+  const hist=JSON.parse(localStorage.getItem('avaliacao_hist')||'[]');
+  hist.push({quando:new Date().toLocaleString('pt-BR'),resultados:data});
+  localStorage.setItem('avaliacao_hist',JSON.stringify(hist));
+  flash('Salvo no histórico ✓');
+}
+function copiarResultados(){
+  const data=coletar();if(!data.length){alert('Responda ao menos um teste.');return;}
+  const txt='Resultados de triagem ('+new Date().toLocaleString('pt-BR')+'):\n\n'+data.join('\n\n')+'\n\n(Triagem, não diagnóstico.)';
+  navigator.clipboard.writeText(txt).then(()=>flash('Copiado ✓'));
+}
+function flash(m){const e=document.getElementById('savedmsg');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2000);}
+</script>
+</body>
+</html>
