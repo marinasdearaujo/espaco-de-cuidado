@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu espaço de cuidado</title>
+<style>
+  :root{--bg:#f6f3ee;--card:#fffdf9;--ink:#3b3a36;--soft:#7a766e;--line:#e7e1d6;
+    --accent:#8aa79a;--accent-deep:#5f7d70;--warm:#d8a48f;--warm-deep:#b97f68;--sky:#9bb0c4;
+    --shadow:0 1px 2px rgba(0,0,0,.04),0 10px 30px rgba(0,0,0,.06)}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:radial-gradient(circle at 50% 0%,#fbf8f3,var(--bg));color:var(--ink);line-height:1.6;min-height:100vh}
+  .wrap{max-width:680px;margin:0 auto;padding:54px 18px 80px}
+  header{text-align:center;margin-bottom:8px}
+  header h1{font-size:1.7rem;font-weight:600;margin:0 0 6px;letter-spacing:-.3px}
+  header p{color:var(--soft);margin:0;font-size:.98rem}
+  .cards{display:grid;gap:14px;margin-top:30px}
+  a.tile{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);
+    border-radius:18px;padding:22px 24px;box-shadow:var(--shadow);transition:.18s;position:relative;overflow:hidden}
+  a.tile:hover{transform:translateY(-2px);border-color:var(--accent)}
+  a.tile .bar{position:absolute;left:0;top:0;bottom:0;width:5px}
+  a.tile h2{margin:0 0 4px;font-size:1.15rem}
+  a.tile p{margin:0;color:var(--soft);font-size:.9rem}
+  a.tile .emoji{font-size:1.5rem;margin-bottom:6px;display:block}
+  .b1{background:var(--accent)}.b2{background:var(--sky)}.b3{background:var(--warm)}.b4{background:var(--warm-deep)}
+  .quote{text-align:center;color:var(--soft);font-size:.9rem;font-style:italic;margin:34px auto 0;max-width:460px}
+  .sos{display:block;text-align:center;margin-top:22px;background:#f3e7e0;border:1px solid #e6cfc1;
+    border-radius:14px;padding:14px;text-decoration:none;color:var(--warm-deep);font-weight:600;font-size:.92rem}
+  footer{text-align:center;color:var(--soft);font-size:.76rem;margin-top:30px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Meu espaço de cuidado 🤍</h1>
+    <p>Um lugar só meu, para os dias entre as sessões. Um passo de cada vez.</p>
+  </header>
+
+  <div class="cards">
+    <a class="tile" href="diario-mente.html">
+      <span class="bar b1"></span>
+      <span class="emoji">📓</span>
+      <h2>Meu diário</h2>
+      <p>Check-in diário, registro de pensamento, check de rejeição e SOS de pânico. Salva no aparelho.</p>
+    </a>
+    <a class="tile" href="ferramentas.html">
+      <span class="bar b2"></span>
+      <span class="emoji">🧰</span>
+      <h2>Caixa de ferramentas</h2>
+      <p>TCC, estratégias de TDAH, energia social/autismo e habilidades de DBT — em formato de bolso.</p>
+    </a>
+    <a class="tile" href="avaliacao.html">
+      <span class="bar b3"></span>
+      <span class="emoji">📋</span>
+      <h2>Autoavaliação</h2>
+      <p>Questionários de triagem validados (atenção, autismo, mascaramento, ansiedade, humor). Uma noção — não diagnóstico.</p>
+    </a>
+  </div>
+
+  <a class="sos" href="diario-mente.html#sos">🫁 Estou em crise agora — ir direto pro SOS</a>
+
+  <p class="quote">"Você não precisa dar conta de tudo hoje. Aparecer aqui já é cuidado."</p>
+
+  <footer>
+    Ferramenta pessoal de apoio e autoconhecimento — não substitui terapia, psiquiatria ou atendimento profissional.<br>
+    Em crise: CVV <strong>188</strong> (24h, gratuito) · emergência: SAMU <strong>192</strong>.
+  </footer>
+</div>
+</body>
+</html>
