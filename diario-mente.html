@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Diário · Mente & Calma</title>
+<style>
+  :root{
+    --bg:#f6f3ee; --card:#fffdf9; --ink:#3b3a36; --soft:#7a766e;
+    --line:#e7e1d6; --accent:#8aa79a; --accent-deep:#5f7d70;
+    --warm:#d8a48f; --warm-deep:#b97f68; --sky:#9bb0c4; --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;
+  }
+  header{padding:34px 20px 10px;text-align:center;max-width:720px;margin:0 auto}
+  header h1{font-size:1.5rem;font-weight:600;margin:0 0 4px;letter-spacing:-.2px}
+  header p{color:var(--soft);margin:0;font-size:.92rem}
+  .wrap{max-width:720px;margin:0 auto;padding:0 16px 80px}
+  nav{
+    display:flex;gap:6px;overflow-x:auto;padding:16px 4px 8px;position:sticky;top:0;
+    background:linear-gradient(var(--bg),var(--bg) 70%,transparent);z-index:5;
+  }
+  nav button{
+    flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--soft);
+    padding:9px 14px;border-radius:999px;font-size:.85rem;cursor:pointer;transition:.18s;white-space:nowrap;
+  }
+  nav button.active{background:var(--accent-deep);color:#fff;border-color:var(--accent-deep)}
+  nav button:hover:not(.active){border-color:var(--accent)}
+  .panel{display:none;animation:fade .25s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:14px 0;box-shadow:var(--shadow)}
+  .card h2{margin:0 0 4px;font-size:1.1rem;font-weight:600}
+  .card .lead{color:var(--soft);font-size:.9rem;margin:0 0 14px}
+  label{display:block;font-size:.85rem;font-weight:600;margin:14px 0 6px;color:var(--ink)}
+  label .hint{font-weight:400;color:var(--soft)}
+  input[type=text],textarea,select{
+    width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 12px;font-size:.95rem;
+    font-family:inherit;background:#fff;color:var(--ink);resize:vertical;
+  }
+  textarea{min-height:70px}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)}
+  .row{display:flex;gap:12px;flex-wrap:wrap}
+  .row>div{flex:1;min-width:140px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:.82rem;cursor:pointer;transition:.15s;user-select:none}
+  .chip.on{background:var(--warm);color:#fff;border-color:var(--warm)}
+  .scale{display:flex;gap:6px;margin-top:6px}
+  .scale button{flex:1;border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 0;cursor:pointer;font-size:.9rem;transition:.15s}
+  .scale button.on{background:var(--sky);color:#fff;border-color:var(--sky)}
+  .btn{background:var(--accent-deep);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:.95rem;font-weight:600;cursor:pointer;transition:.18s}
+  .btn:hover{background:#4f6a5e}
+  .btn.ghost{background:transparent;color:var(--accent-deep);border:1px solid var(--accent)}
+  .btn.warm{background:var(--warm-deep)}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+  .saved{color:var(--accent-deep);font-size:.85rem;opacity:0;transition:.3s}
+  .saved.show{opacity:1}
+  .breath{width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,var(--accent) 0%,var(--accent-deep) 100%);
+    margin:24px auto;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;
+    animation:breathe 12s ease-in-out infinite;box-shadow:0 0 40px rgba(95,125,112,.3)}
+  @keyframes breathe{0%,100%{transform:scale(.65)}40%{transform:scale(1)}50%{transform:scale(1)}90%{transform:scale(.65)}}
+  .entry{border-left:3px solid var(--accent);background:#fff;border-radius:8px;padding:12px 14px;margin:10px 0;font-size:.9rem}
+  .entry .meta{font-size:.78rem;color:var(--soft);margin-bottom:6px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+  .entry .tag{display:inline-block;background:var(--line);border-radius:6px;padding:1px 8px;font-size:.72rem;color:var(--soft)}
+  .entry pre{white-space:pre-wrap;font-family:inherit;margin:0;font-size:.88rem}
+  .del{background:none;border:none;color:var(--warm-deep);cursor:pointer;font-size:.78rem}
+  .note{background:#f0ede6;border-radius:10px;padding:12px 14px;font-size:.85rem;color:var(--soft);margin:12px 0}
+  .grounding li{margin:8px 0}
+  details{border:1px solid var(--line);border-radius:10px;padding:0 14px;margin:8px 0;background:#fff}
+  details summary{cursor:pointer;padding:12px 0;font-weight:600;font-size:.9rem}
+  details p{margin:0 0 12px;font-size:.88rem;color:var(--soft)}
+  .pulse{font-size:1.6rem;text-align:center;margin:10px 0}
+  footer{text-align:center;color:var(--soft);font-size:.78rem;padding:0 20px 40px;max-width:600px;margin:0 auto}
+</style>
+</head>
+<body>
+<header>
+  <h1>Meu espaço · mente & calma</h1>
+  <p>Privado, só seu. Tudo fica salvo neste navegador — ninguém mais vê.</p>
+</header>
+
+<div class="wrap">
+  <nav>
+    <button class="active" data-tab="hoje">🌤️ Hoje</button>
+    <button data-tab="pensamento">🧠 Pensamento</button>
+    <button data-tab="rejeicao">💬 É rejeição?</button>
+    <button data-tab="sos">🫁 SOS pânico</button>
+    <button data-tab="registros">📖 Meus registros</button>
+  </nav>
+
+  <!-- ===== HOJE ===== -->
+  <section class="panel active" id="hoje">
+    <div class="card">
+      <h2>Check-in de hoje</h2>
+      <p class="lead">Versão leve. Em dia ruim, responda só o que conseguir e salve. Aparecer aqui já é o suficiente.</p>
+
+      <label>Como está o humor agora?</label>
+      <div class="scale" data-field="humor">
+        <button>1<br><small>no fundo</small></button><button>2</button><button>3</button><button>4</button><button>5<br><small>tranquila</small></button>
+      </div>
+
+      <label>Nível de energia</label>
+      <div class="scale" data-field="energia">
+        <button>1</button><button>2</button><button>3</button><button>4</button><button>5</button>
+      </div>
+
+      <label>Ansiedade hoje</label>
+      <div class="scale" data-field="ansiedade">
+        <button>1<br><small>calma</small></button><button>2</button><button>3</button><button>4</button><button>5<br><small>no limite</small></button>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Como dormiu? <span class="hint">(horas / qualidade)</span></label>
+          <input type="text" id="h_sono" placeholder="ex: 5h, acordei várias vezes">
+        </div>
+        <div>
+          <label>Tomei a medicação?</label>
+          <select id="h_med"><option value="">—</option><option>Sim, tudo</option><option>Parcial</option><option>Não</option></select>
+        </div>
+      </div>
+
+      <label>O que está pesando? <span class="hint">(uma linha já vale)</span></label>
+      <textarea id="h_pesa" placeholder="Solta aqui, sem filtro."></textarea>
+
+      <label>Uma coisa, por menor que seja, que foi ok hoje</label>
+      <input type="text" id="h_bom" placeholder="ex: tomei meu café com calma">
+
+      <div class="btnrow">
+        <button class="btn" onclick="salvarHoje()">Salvar check-in</button>
+        <span class="saved" id="save_hoje">salvo ✓</span>
+      </div>
+    </div>
+    <div class="note">💡 Sobre a Ritalina + pânico/insônia: anota aqui nos dias de crise como estava o sono e a ansiedade. Quando levar ao psiquiatra, esses registros viram evidência concreta pra ajustar a medicação.</div>
+  </section>
+
+  <!-- ===== PENSAMENTO (Thought Record) ===== -->
+  <section class="panel" id="pensamento">
+    <div class="card">
+      <h2>Registro de pensamento</h2>
+      <p class="lead">A ferramenta central da TCC. Quando a mente gruda numa ameaça, isto separa o <em>fato</em> da <em>interpretação</em>. Vá de cima pra baixo.</p>
+
+      <label>1. Situação <span class="hint">— o que aconteceu? (só os fatos, como uma câmera veria)</span></label>
+      <textarea id="t_sit" placeholder="ex: Mandei mensagem pra X às 14h e ela ainda não respondeu."></textarea>
+
+      <label>2. Emoção <span class="hint">— o que sentiu e quão forte (0–100%)</span></label>
+      <div class="row">
+        <div><input type="text" id="t_emo" placeholder="ex: rejeição, medo, vergonha"></div>
+        <div><input type="text" id="t_emoint" placeholder="intensidade % (ex: 85)"></div>
+      </div>
+
+      <label>3. Pensamento automático <span class="hint">— o que passou pela cabeça? Qual o "pior significado"?</span></label>
+      <textarea id="t_auto" placeholder="ex: 'Ela está chateada comigo. Eu fiz algo errado. Vou perder essa relação.'"></textarea>
+
+      <label>4. Que distorção pode estar aqui? <span class="hint">(toque nas que reconhecer — veja a lista abaixo)</span></label>
+      <div class="chips" id="t_dist"></div>
+
+      <label>5. Evidência A FAVOR do pensamento</label>
+      <textarea id="t_fav" placeholder="O que realmente sustenta esse pensamento?"></textarea>
+
+      <label>6. Evidência CONTRA <span class="hint">— o que um amigo que te ama apontaria?</span></label>
+      <textarea id="t_contra" placeholder="ex: 'Ela trabalha e demora pra responder sempre. Ontem mesmo foi carinhosa. Não há sinal real de rejeição.'"></textarea>
+
+      <label>7. Pensamento mais equilibrado <span class="hint">— não positivo forçado, só mais justo e completo</span></label>
+      <textarea id="t_bal" placeholder="ex: 'Não sei por que ela não respondeu, e provavelmente não tem a ver comigo. Posso esperar antes de concluir qualquer coisa.'"></textarea>
+
+      <label>8. Como está a emoção AGORA? <span class="hint">(0–100%)</span></label>
+      <input type="text" id="t_emofim" placeholder="ex: 40">
+
+      <div class="btnrow">
+        <button class="btn" onclick="salvarPensamento()">Salvar registro</button>
+        <button class="btn ghost" onclick="limparPensamento()">Limpar</button>
+        <span class="saved" id="save_pens">salvo ✓</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Distorções de pensamento comuns</h2>
+      <p class="lead">Não é "pensar errado" — é o cérebro tomando atalhos sob estresse. Reconhecer já tira o poder delas.</p>
+      <details><summary>Leitura mental</summary><p>Assumir que sabe o que o outro pensa ("ela me acha chata") sem evidência. Muito ligado à RSD.</p></details>
+      <details><summary>Catastrofização</summary><p>Saltar pro pior cenário possível e tratá-lo como certo.</p></details>
+      <details><summary>Tudo-ou-nada</summary><p>Ver em preto e branco: se não foi perfeito, foi um desastre.</p></details>
+      <details><summary>Personalização</summary><p>Levar pro pessoal coisas que não são sobre você (o silêncio do outro vira "fiz algo errado").</p></details>
+      <details><summary>Filtro negativo</summary><p>A mente foca só na ameaça/no ruim e apaga o resto — exatamente o que você descreveu.</p></details>
+      <details><summary>Raciocínio emocional</summary><p>"Sinto que sou rejeitada, logo é verdade." Sentir não é prova.</p></details>
+      <details><summary>Deveria / tenho que</summary><p>Regras rígidas ("eu deveria estar feliz", "tenho que dar conta") que viram cobrança e culpa.</p></details>
+      <details><summary>Adivinhação do futuro</summary><p>Prever que vai dar errado ("não vou aguentar a maternidade") como se fosse fato.</p></details>
+    </div>
+  </section>
+
+  <!-- ===== REJEIÇÃO (RSD) ===== -->
+  <section class="panel" id="rejeicao">
+    <div class="card">
+      <h2>É rejeição mesmo, ou é a RSD?</h2>
+      <p class="lead">A disforia de rejeição faz uma faísca neutra parecer um incêndio. Antes de reagir ou fugir, passe por estas perguntas. Respire primeiro.</p>
+
+      <label>O que disparou a sensação de rejeição?</label>
+      <textarea id="r_gatilho" placeholder="ex: meu marido respondeu seco, alguém não curtiu meu trabalho..."></textarea>
+
+      <label>Qual a intensidade da dor agora? (0–100%)</label>
+      <input type="text" id="r_int" placeholder="ex: 90">
+
+      <div class="note">
+        <strong>Pausa de realidade — responda na cabeça:</strong>
+        <ul style="margin:8px 0 0;padding-left:18px">
+          <li>Que <em>fato observável</em> aconteceu, sem minha interpretação?</li>
+          <li>Existe pelo menos <em>uma outra explicação</em> (ela está cansada, ocupada, com problema próprio)?</li>
+          <li>Se uma amiga me contasse isso, eu acharia que ela foi rejeitada?</li>
+          <li>Em 1 semana, isso ainda vai importar?</li>
+          <li>Essa sensação de tamanho 90 é proporcional ao que de fato aconteceu?</li>
+        </ul>
+      </div>
+
+      <label>Releitura mais justa</label>
+      <textarea id="r_rele" placeholder="ex: 'Ele respondeu seco porque teve um dia ruim. Não é sobre mim. Minha RSD amplificou.'"></textarea>
+
+      <label>O que eu faço agora? <span class="hint">— escolha uma resposta, não uma reação</span></label>
+      <div class="chips" id="r_acao"></div>
+
+      <div class="btnrow">
+        <button class="btn warm" onclick="salvarRejeicao()">Salvar</button>
+        <span class="saved" id="save_rej">salvo ✓</span>
+      </div>
+    </div>
+    <div class="note">Lembrete pra reler nas crises: <strong>a urgência de fugir ou de "resolver agora" é o sintoma, não a solução.</strong> A onda da RSD costuma baixar muito em 20–30 minutos se você não alimentar ela. Adia a reação, não a engole.</div>
+  </section>
+
+  <!-- ===== SOS ===== -->
+  <section class="panel" id="sos">
+    <div class="card" style="text-align:center">
+      <h2>Você está em pico de ansiedade ou pânico</h2>
+      <p class="lead">Isto é horrível, mas não é perigoso e vai passar. Pânico sempre tem pico e desce. Respire comigo.</p>
+      <div class="breath">inspira… segura… solta</div>
+      <p style="font-size:.9rem;color:var(--soft)">Acompanhe o círculo: <strong>inspire</strong> enquanto cresce (4s), <strong>segure</strong> no topo, <strong>solte devagar</strong> enquanto encolhe (6s). O sopro longo é o que desliga o alarme do corpo.</p>
+    </div>
+
+    <div class="card">
+      <h2>5-4-3-2-1 — voltar pro presente</h2>
+      <ol class="grounding" style="font-size:.92rem">
+        <li><strong>5</strong> coisas que você <strong>vê</strong> ao redor</li>
+        <li><strong>4</strong> coisas que você pode <strong>tocar</strong> (sinta a textura)</li>
+        <li><strong>3</strong> sons que você <strong>ouve</strong></li>
+        <li><strong>2</strong> coisas que você <strong>cheira</strong></li>
+        <li><strong>1</strong> coisa que você <strong>saboreia</strong></li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h2>Para o corpo (quando a respiração não basta)</h2>
+      <p class="lead">Técnica TIPP — muda a fisiologia rápido:</p>
+      <ul style="font-size:.9rem">
+        <li><strong>Temperatura:</strong> água bem gelada no rosto, ou segure gelo. Ativa o reflexo de mergulho e baixa o batimento.</li>
+        <li><strong>Movimento intenso:</strong> 1 min de polichinelo / subir escada — queima a adrenalina presa.</li>
+        <li><strong>Relaxamento:</strong> tensione os ombros forte por 5s e solte. Repita.</li>
+      </ul>
+      <div class="note">Verdades pra ancorar: <em>"Já passei por isto antes e passou. Meu corpo está protegendo, não quebrando. Não preciso fazer nada agora além de respirar."</em></div>
+      <div class="note">⚠️ Crises fortes que surgiram <strong>depois</strong> de começar a Ritalina podem estar ligadas a ela. Anota a frequência no "Hoje" e leva ao psiquiatra — isso tem ajuste.</div>
+    </div>
+
+    <div class="note" style="background:#efe7e3;color:var(--warm-deep)">
+      Se em algum momento vier vontade de se machucar ou de não estar mais aqui, por favor ligue <strong>188 (CVV)</strong> — 24h, gratuito e sigiloso — ou fale agora com alguém de confiança. Você não precisa segurar isso sozinha.
+    </div>
+  </section>
+
+  <!-- ===== REGISTROS ===== -->
+  <section class="panel" id="registros">
+    <div class="card">
+      <h2>Meus registros</h2>
+      <p class="lead">Seu histórico. Quando quiser que eu (o Claude) ache padrões, clique em "Copiar tudo" e cole pra mim no chat.</p>
+      <div class="btnrow">
+        <button class="btn" onclick="copiarTudo()">📋 Copiar tudo (p/ análise)</button>
+        <button class="btn ghost" onclick="baixarTudo()">⬇️ Baixar backup</button>
+        <button class="btn ghost" onclick="document.getElementById('importFile').click()">⬆️ Restaurar backup</button>
+        <input type="file" id="importFile" accept="application/json" style="display:none" onchange="importar(event)">
+        <span class="saved" id="save_copy">copiado ✓</span>
+      </div>
+      <div class="note" style="margin-top:8px">⚠️ <strong>Seus registros ficam salvos só neste navegador</strong> (não na nuvem). Para não perder: baixe o backup de vez em quando. Para abrir no celular: baixe o backup aqui, mande pro celular e use "Restaurar backup".</div>
+      <div id="lista" style="margin-top:16px"></div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  Esta ferramenta é apoio e autoconhecimento — não substitui acompanhamento profissional. Você já está fazendo terapia e psiquiatria, e isso aqui é o seu kit pros momentos entre as sessões. Um passo de cada vez. 🤍
+</footer>
+
+<script>
+const KEY='diario_mente_v1';
+const DISTORCOES=['Leitura mental','Catastrofização','Tudo-ou-nada','Personalização','Filtro negativo','Raciocínio emocional','Deveria/tenho que','Adivinhação do futuro'];
+const ACOES=['Esperar 30 min antes de reagir','Respirar e voltar depois','Perguntar direto, sem acusar','Anotar e seguir o dia','Pedir um abraço','Não fazer nada agora'];
+
+// ---- estado de seleção ----
+const sel={humor:null,energia:null,ansiedade:null,dist:new Set(),acao:new Set()};
+
+// monta chips
+function chips(container,arr,store){
+  const el=document.getElementById(container);
+  arr.forEach(t=>{
+    const c=document.createElement('div');c.className='chip';c.textContent=t;
+    c.onclick=()=>{c.classList.toggle('on');store.has(t)?store.delete(t):store.add(t)};
+    el.appendChild(c);
+  });
+}
+chips('t_dist',DISTORCOES,sel.dist);
+chips('r_acao',ACOES,sel.acao);
+
+// escalas
+document.querySelectorAll('.scale').forEach(s=>{
+  const f=s.dataset.field;
+  s.querySelectorAll('button').forEach((b,i)=>{
+    b.onclick=()=>{s.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');sel[f]=i+1};
+  });
+});
+
+// nav
+document.querySelectorAll('nav button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById(b.dataset.tab).classList.add('active');
+    if(b.dataset.tab==='registros') render();
+  };
+});
+
+function load(){return JSON.parse(localStorage.getItem(KEY)||'[]')}
+function save(arr){localStorage.setItem(KEY,JSON.stringify(arr))}
+function stamp(){return new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+function flash(id){const e=document.getElementById(id);e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1800)}
+function add(entry){const a=load();a.unshift({...entry,quando:stamp(),id:Date.now()+Math.round(performance.now())});save(a)}
+
+function salvarHoje(){
+  add({tipo:'Check-in',dados:{
+    humor:sel.humor,energia:sel.energia,ansiedade:sel.ansiedade,
+    sono:val('h_sono'),medicacao:val('h_med'),pesa:val('h_pesa'),bom:val('h_bom')
+  }});
+  flash('save_hoje');
+  ['h_sono','h_pesa','h_bom'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('h_med').value='';
+}
+function salvarPensamento(){
+  add({tipo:'Registro de pensamento',dados:{
+    situacao:val('t_sit'),emocao:val('t_emo'),intensidade:val('t_emoint'),
+    automatico:val('t_auto'),distorcoes:[...sel.dist],favor:val('t_fav'),
+    contra:val('t_contra'),equilibrado:val('t_bal'),emocaoFim:val('t_emofim')
+  }});
+  flash('save_pens');limparPensamento();
+}
+function limparPensamento(){
+  ['t_sit','t_emo','t_emoint','t_auto','t_fav','t_contra','t_bal','t_emofim'].forEach(i=>document.getElementById(i).value='');
+  sel.dist.clear();document.querySelectorAll('#t_dist .chip').forEach(c=>c.classList.remove('on'));
+}
+function salvarRejeicao(){
+  add({tipo:'Check de rejeição (RSD)',dados:{
+    gatilho:val('r_gatilho'),intensidade:val('r_int'),releitura:val('r_rele'),acoes:[...sel.acao]
+  }});
+  flash('save_rej');
+  ['r_gatilho','r_int','r_rele'].forEach(i=>document.getElementById(i).value='');
+  sel.acao.clear();document.querySelectorAll('#r_acao .chip').forEach(c=>c.classList.remove('on'));
+}
+function val(id){return document.getElementById(id).value.trim()}
+
+function render(){
+  const a=load();const box=document.getElementById('lista');
+  if(!a.length){box.innerHTML='<p style="color:var(--soft);font-size:.9rem">Ainda sem registros. Comece pelo "Hoje" — uma linha já conta. 🌱</p>';return}
+  box.innerHTML=a.map(e=>`
+    <div class="entry">
+      <div class="meta"><span><span class="tag">${e.tipo}</span> ${e.quando}</span>
+      <button class="del" onclick="del(${e.id})">apagar</button></div>
+      <pre>${fmt(e)}</pre>
+    </div>`).join('');
+}
+function fmt(e){
+  const d=e.dados;let l=[];
+  if(e.tipo==='Check-in'){
+    if(d.humor)l.push(`Humor ${d.humor}/5 · Energia ${d.energia||'?'}/5 · Ansiedade ${d.ansiedade||'?'}/5`);
+    if(d.sono)l.push(`Sono: ${d.sono}`);if(d.medicacao)l.push(`Medicação: ${d.medicacao}`);
+    if(d.pesa)l.push(`Pesando: ${d.pesa}`);if(d.bom)l.push(`Foi ok: ${d.bom}`);
+  }else if(e.tipo==='Registro de pensamento'){
+    if(d.situacao)l.push(`Situação: ${d.situacao}`);
+    if(d.emocao)l.push(`Emoção: ${d.emocao} (${d.intensidade||'?'}%) → depois ${d.emocaoFim||'?'}%`);
+    if(d.automatico)l.push(`Pensamento: ${d.automatico}`);
+    if(d.distorcoes&&d.distorcoes.length)l.push(`Distorções: ${d.distorcoes.join(', ')}`);
+    if(d.contra)l.push(`Contra: ${d.contra}`);
+    if(d.equilibrado)l.push(`Equilibrado: ${d.equilibrado}`);
+  }else{
+    if(d.gatilho)l.push(`Gatilho: ${d.gatilho} (${d.intensidade||'?'}%)`);
+    if(d.releitura)l.push(`Releitura: ${d.releitura}`);
+    if(d.acoes&&d.acoes.length)l.push(`Ação: ${d.acoes.join(', ')}`);
+  }
+  return l.join('\n');
+}
+function del(id){if(confirm('Apagar este registro?')){save(load().filter(e=>e.id!==id));render()}}
+function copiarTudo(){
+  const a=load();if(!a.length)return alert('Sem registros ainda.');
+  const txt=a.slice().reverse().map(e=>`[${e.quando}] ${e.tipo}\n${fmt(e)}`).join('\n\n---\n\n');
+  navigator.clipboard.writeText(txt).then(()=>flash('save_copy'));
+}
+function baixarTudo(){
+  const blob=new Blob([JSON.stringify(load(),null,2)],{type:'application/json'});
+  const u=URL.createObjectURL(blob);const a=document.createElement('a');
+  a.href=u;a.download='diario-mente-backup.json';a.click();URL.revokeObjectURL(u);
+}
+function importar(e){
+  const f=e.target.files[0];if(!f)return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const imp=JSON.parse(reader.result);
+      if(!Array.isArray(imp))throw 0;
+      const atual=load();
+      const ids=new Set(atual.map(x=>x.id));
+      const novos=imp.filter(x=>x&&x.id&&!ids.has(x.id));
+      const merged=[...atual,...novos].sort((a,b)=>(b.id||0)-(a.id||0));
+      save(merged);render();
+      alert(`Backup restaurado! ${novos.length} registro(s) novo(s) adicionado(s) (duplicados foram ignorados).`);
+    }catch(err){alert('Arquivo inválido. Use um backup .json baixado deste diário.');}
+    e.target.value='';
+  };
+  reader.readAsText(f);
+}
+render();
+</script>
+</body>
+</html>
