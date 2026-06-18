@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autoavaliação aprofundada · Triagem (não é diagnóstico)</title>
+<style>
+  :root{--bg:#f6f3ee;--card:#fffdf9;--ink:#3b3a36;--soft:#7a766e;--line:#e7e1d6;
+    --accent:#8aa79a;--accent-deep:#5f7d70;--warm:#d8a48f;--warm-deep:#b97f68;--sky:#9bb0c4;--alert:#c98a6a;
+    --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05)}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+  header{padding:32px 20px 8px;text-align:center;max-width:760px;margin:0 auto}
+  header h1{font-size:1.45rem;font-weight:600;margin:0 0 4px}
+  header p{color:var(--soft);margin:0;font-size:.92rem}
+  a.home{color:var(--accent-deep);font-size:.85rem}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 90px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin:16px 0;box-shadow:var(--shadow)}
+  .banner{background:#f3ece6;border:1px solid #e4d3c6;border-radius:14px;padding:16px 18px;margin:16px 0;font-size:.9rem}
+  .banner strong{color:var(--warm-deep)}
+  h2{font-size:1.12rem;margin:0 0 2px}
+  .org{font-size:.78rem;color:var(--soft);text-transform:uppercase;letter-spacing:.5px}
+  .mede{color:var(--soft);font-size:.9rem;margin:8px 0 0}
+  .trad{display:inline-block;font-size:.72rem;border-radius:6px;padding:2px 9px;margin-top:10px}
+  .trad.of{background:#e3ede8;color:var(--accent-deep)}
+  .trad.no{background:#f1e4dc;color:var(--warm-deep)}
+  .enun{font-size:.9rem;font-style:italic;color:var(--soft);margin:14px 0 4px}
+  .count{font-size:.78rem;color:var(--soft);margin-bottom:8px}
+  .item{padding:13px 0;border-top:1px solid var(--line)}
+  .item:first-of-type{border-top:none}
+  .qtext{font-size:.93rem;margin-bottom:8px}
+  .opts{display:flex;flex-wrap:wrap;gap:6px}
+  .opts label{display:flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:.8rem;cursor:pointer;background:#fff;transition:.12s;color:var(--soft)}
+  .opts label:hover{border-color:var(--accent)}
+  .opts input{accent-color:var(--accent-deep);margin:0}
+  .opts label.sel{background:var(--accent-deep);color:#fff;border-color:var(--accent-deep)}
+  .btn{background:var(--accent-deep);color:#fff;border:none;border-radius:10px;padding:12px 22px;font-size:.95rem;font-weight:600;cursor:pointer}
+  .btn:hover{background:#4f6a5e}
+  .btn.ghost{background:transparent;color:var(--accent-deep);border:1px solid var(--accent)}
+  .result{margin-top:18px;border-radius:12px;padding:16px 18px;font-size:.92rem;display:none}
+  .result.show{display:block}
+  .result.low{background:#e9f0ec;border:1px solid #cfe0d6}
+  .result.mid{background:#f6efe2;border:1px solid #ecdcbf}
+  .result.high{background:#f3e2d8;border:1px solid #e6c3ad}
+  .result .score{font-size:1.4rem;font-weight:700;display:block;margin-bottom:4px}
+  .result table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.86rem}
+  .result td{padding:4px 6px;border-top:1px solid rgba(0,0,0,.07)}
+  nav{display:flex;gap:6px;overflow-x:auto;padding:14px 4px;position:sticky;top:0;background:linear-gradient(var(--bg),var(--bg) 75%,transparent);z-index:5}
+  nav a{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--soft);padding:8px 13px;border-radius:999px;font-size:.82rem;text-decoration:none;white-space:nowrap}
+  .footer-actions{position:sticky;bottom:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;box-shadow:var(--shadow)}
+  .saved{color:var(--accent-deep);font-size:.85rem;opacity:0;transition:.3s}
+  .saved.show{opacity:1}
+  .progress{font-size:.78rem;color:var(--soft);margin-left:auto}
+</style>
+</head>
+<body>
+<header>
+  <h1>Autoavaliação aprofundada</h1>
+  <p>As versões longas e detalhadas — uma noção mais minuciosa, ainda não um diagnóstico.</p>
+  <p style="margin-top:6px"><a class="home" href="index.html">← início</a> · <a class="home" href="avaliacao.html">versão rápida</a></p>
+</header>
+
+<div class="wrap">
+  <div class="banner">
+    <strong>São longos — e tudo bem fazer em partes.</strong> Cada teste salva sozinho conforme você responde (neste navegador). Pode fechar e voltar depois. São <strong>triagens, não diagnóstico</strong>: um resultado alto significa "vale buscar avaliação profissional", nunca "você tem X".
+  </div>
+  <div class="banner" style="background:#f1e8e3;border-color:#e0cabb">
+    <strong>⚠️ Lembre do seu momento:</strong> fase aguda de ansiedade + Ritalina inflam os escores de emoção e atenção. Responda pensando na <strong>vida toda</strong> (não só nas últimas semanas, exceto onde o teste pedir) e <strong>refaça quando estiver estável</strong> para comparar.
+  </div>
+  <div class="banner" style="font-size:.82rem;color:var(--soft)">
+    <strong>Sobre as traduções:</strong> só o DASS-21 tem versão validada em PT-BR (Vignola & Tucci, 2014). RAADS-R, AQ-50, WURS-25 e DERS-36 usam <strong>tradução não-oficial</strong> — ótimas para autoconhecimento, não para uso clínico formal. O AQ-50 parte da versão oficial portuguesa (Castro & Lima). Fontes: Ritvo 2011, Baron-Cohen 2001, Ward 1993, Vignola & Tucci 2014, Gratz & Roemer 2004.
+  </div>
+
+  <nav>
+    <a href="#raads">Autismo (RAADS-R · 80)</a>
+    <a href="#aq50">Autismo (AQ-50)</a>
+    <a href="#wurs">TDAH infância (WURS-25)</a>
+    <a href="#dass">Ansiedade/Humor (DASS-21)</a>
+    <a href="#ders">Emoções (DERS-36)</a>
+  </nav>
+
+  <div id="instrumentos"></div>
+
+  <div class="footer-actions">
+    <button class="btn" onclick="copiarResultados()">📋 Copiar resultados</button>
+    <button class="btn ghost" onclick="limparTudo()">🗑️ Recomeçar</button>
+    <span class="saved" id="savedmsg"></span>
+  </div>
+</div>
+
+<script>
+const ESC_RAADS=['Verdadeiro agora e quando eu era jovem','Verdadeiro só agora','Verdadeiro só quando eu era < 16 anos','Nunca foi verdadeiro'];
+const ESC_AQ=['Concordo muito','Concordo pouco','Discordo pouco','Discordo muito'];
+const ESC_WURS=['Nada / muito pouco','Levemente','Moderadamente','Bastante','Muito / demais'];
+const ESC_DASS=['Não se aplicou','Em algum grau / às vezes','Grau considerável / boa parte','Aplicou-se muito / quase sempre'];
+const ESC_DERS=['Quase nunca','Às vezes','Metade das vezes','Maior parte das vezes','Quase sempre'];
+
+// ---- RAADS-R ----
+const RAADS_REV=new Set([1,6,11,18,23,26,33,37,43,47,48,53,58,62,68,72,77]);
+const RAADS_ITENS=["Sou uma pessoa solidária / empática.","Frequentemente uso palavras e frases de filmes e da TV nas conversas.","Frequentemente me surpreendo quando me dizem que fui rude.","Às vezes falo alto ou baixo demais sem perceber.","Frequentemente não sei como agir em situações sociais.","Consigo \"me colocar no lugar do outro\".","Tenho dificuldade de entender o sentido de certas expressões (ex.: \"você é a menina dos meus olhos\").","Só gosto de conversar com pessoas que compartilham dos meus interesses específicos.","Foco nos detalhes em vez da ideia geral.","Sempre noto a textura da comida na boca — isso me importa mais que o sabor.","Sinto falta dos meus melhores amigos ou família quando ficamos muito tempo separados.","Às vezes ofendo os outros ao dizer o que penso, mesmo sem querer.","Só gosto de pensar e falar sobre as poucas coisas que me interessam.","Prefiro comer num restaurante sozinha do que com alguém que conheço.","Não consigo imaginar como seria ser outra pessoa.","Já me disseram que sou desajeitada ou descoordenada.","Os outros me consideram esquisita ou diferente.","Percebo quando os amigos precisam ser confortados.","Sou muito sensível à sensação das roupas ao toque — importa mais que a aparência delas.","Gosto de imitar o jeito de falar e agir de certas pessoas; ajuda a parecer mais normal.","Pode ser muito intimidante falar com mais de uma pessoa ao mesmo tempo.","Preciso \"agir normalmente\" para agradar os outros e fazer com que gostem de mim.","Conhecer pessoas novas geralmente é fácil para mim.","Fico muito confusa quando me interrompem enquanto falo de algo que me interessa muito.","É difícil entender como as pessoas estão se sentindo quando conversamos.","Gosto de conversar com várias pessoas ao mesmo tempo (à mesa, na escola, no trabalho).","Levo as coisas ao pé da letra, então frequentemente não capto o que querem dizer.","É muito difícil perceber quando alguém está envergonhado ou com ciúmes.","Algumas texturas comuns, que não incomodam os outros, são muito desagradáveis na minha pele.","Fico extremamente perturbada quando o jeito como gosto de fazer as coisas muda de repente.","Nunca quis nem precisei ter o que chamam de \"relacionamento íntimo\".","É difícil iniciar e encerrar uma conversa; preciso continuar até terminar.","Falo com um ritmo normal.","O mesmo som, cor ou textura pode mudar de repente de muito intenso para muito fraco.","É difícil para mim perceber quando alguém está flertando comigo.","Consigo ver na minha mente, em detalhes exatos, as coisas que me interessam.","A expressão \"te tenho debaixo da pele\" me deixa desconfortável.","Sou uma pessoa compreensiva.","Não me conecto com personagens de filmes e não sinto o que eles sentem.","Não percebo quando alguém está flertando comigo.","Consigo ver na mente, em detalhes exatos, as coisas que me interessam.","Mantenho listas de coisas que me interessam, mesmo sem uso prático (estatísticas, horários, datas, fatos históricos).","Quando me sinto sobrecarregada pelos sentidos, preciso me isolar para desligá-los.","Gosto de conversar sobre as coisas com meus amigos.","Não consigo perceber se alguém está interessado ou entediado com o que digo.","Pode ser muito difícil interpretar rosto, mãos e movimentos do corpo de alguém enquanto fala.","A mesma coisa (roupa, temperatura) pode parecer muito diferente para mim em momentos distintos.","Sinto-me muito confortável em namorar ou estar em situações sociais.","Tento ajudar o máximo possível quando me contam problemas pessoais.","Já me disseram que tenho uma voz incomum (sem entonação, monótona, infantil ou aguda).","Às vezes um pensamento/assunto fica preso na mente e preciso falar dele mesmo sem ninguém se interessar.","Faço certas coisas com as mãos repetidamente (balançar, girar objetos, mexer perto dos olhos).","Nunca me interessei pelo que a maioria das pessoas considera interessante.","Sou considerada uma pessoa compassiva.","Convivo com os outros seguindo regras específicas que me ajudam a parecer normal.","É muito difícil trabalhar e funcionar em grupos.","Quando converso, é difícil mudar de assunto; se mudam, fico perturbada e confusa.","Às vezes preciso tapar os ouvidos para bloquear ruídos dolorosos (aspirador, gente falando demais/alto).","Consigo bater papo e fazer conversa fiada com as pessoas.","Às vezes coisas que deveriam doer não doem (me machucar, queimar a mão).","Ao conversar, tenho dificuldade de saber quando é minha vez de falar ou ouvir.","Sou considerada solitária por quem me conhece melhor.","Geralmente falo num tom normal.","Gosto que as coisas sejam iguais dia após dia; até pequenas mudanças na rotina me perturbam.","Como fazer amigos e socializar é um mistério para mim.","Girar ou me balançar numa cadeira me acalma quando estou estressada.","A expressão \"ele tem o coração na mão\" não faz sentido para mim.","Em lugar com muitos cheiros, texturas, ruídos ou luzes fortes, sinto ansiedade ou medo.","Consigo perceber quando alguém diz uma coisa mas quer dizer outra.","Gosto de ficar sozinha o máximo possível.","Guardo meus pensamentos empilhados na memória como fichas, e folheio até achar o certo.","O mesmo som às vezes parece muito alto ou muito baixo, mesmo sabendo que não mudou.","Gosto de passar tempo comendo e conversando com família e amigos.","Não tolero coisas de que não gosto (cheiros, texturas, sons, cores).","Não gosto de ser abraçada ou segurada.","Quando vou a algum lugar, preciso seguir uma rota familiar, senão fico confusa e perturbada.","É difícil descobrir o que as outras pessoas esperam de mim.","Gosto de ter amigos próximos.","As pessoas me dizem que dou detalhes demais.","Frequentemente me dizem que faço perguntas constrangedoras.","Costumo apontar os erros dos outros."];
+
+// ---- AQ-50 ---- (A = pontua se concordar; D = pontua se discordar)
+const AQ_DIR={1:'A',2:'A',4:'A',5:'A',6:'A',7:'A',9:'A',12:'A',13:'A',16:'A',18:'A',19:'A',20:'A',21:'A',22:'A',23:'A',26:'A',33:'A',35:'A',39:'A',41:'A',42:'A',43:'A',45:'A',46:'A'};
+const AQ_ITENS=["Prefiro fazer coisas com outras pessoas do que sozinha.","Prefiro fazer as coisas sempre da mesma maneira.","Se tento imaginar algo, crio uma imagem mental com facilidade.","Frequentemente fico tão absorta numa coisa que perco de vista o resto.","Costumo notar pequenos sons que outros não percebem.","Costumo reparar em placas de carro ou sequências de informação parecidas.","Dizem-me com frequência que fui indelicada, mesmo achando que fui educada.","Quando leio uma história, imagino facilmente a aparência dos personagens.","Tenho fascínio por datas.","Num grupo, consigo acompanhar várias conversas ao mesmo tempo.","Acho as situações sociais fáceis.","Costumo notar detalhes que outros não percebem.","Prefiro ir a uma biblioteca a ir a uma festa.","Acho fácil inventar histórias.","Sinto-me mais atraída por pessoas do que por coisas.","Costumo ter interesses muito fortes e fico incomodada se não posso me dedicar a eles.","Gosto de conversa fiada / bate-papo social.","Quando falo, nem sempre é fácil para os outros entrarem na conversa.","Tenho fascínio por números.","Quando leio uma história, acho difícil entender as intenções dos personagens.","Não gosto muito de ler ficção.","Acho difícil fazer novos amigos.","Reparo em padrões nas coisas o tempo todo.","Prefiro ir ao teatro a ir a um museu.","Não me incomoda se minha rotina diária é alterada.","Com frequência não sei como manter uma conversa.","Acho fácil \"ler nas entrelinhas\" quando falam comigo.","Geralmente me concentro no todo, em vez dos pequenos detalhes.","Não sou muito boa em lembrar números de telefone.","Geralmente não noto pequenas mudanças numa situação ou na aparência de alguém.","Sei perceber quando quem me ouve está ficando entediado.","Acho fácil fazer mais de uma coisa ao mesmo tempo.","Ao telefone, não tenho certeza de quando é minha vez de falar.","Gosto de fazer coisas espontaneamente.","Costumo ser a última a entender a graça de uma piada.","Acho fácil perceber o que alguém pensa ou sente só de olhar o rosto.","Se há uma interrupção, volto rapidamente ao que estava fazendo.","Sou boa em conversa fiada / bate-papo social.","As pessoas costumam dizer que fico insistindo no mesmo assunto.","Quando criança, gostava de brincar de faz de conta com outras crianças.","Gosto de colecionar informações sobre categorias de coisas (tipos de carro, de pássaro, de planta...).","Acho difícil imaginar como seria ser outra pessoa.","Gosto de planejar com cuidado as atividades de que participo.","Gosto de eventos / ocasiões sociais.","Acho difícil entender as intenções das pessoas.","Situações novas me deixam ansiosa.","Gosto de conhecer pessoas novas.","Sou uma boa diplomata.","Não sou muito boa em lembrar a data de aniversário das pessoas.","Acho muito fácil brincar de faz de conta com crianças."];
+
+// ---- WURS-25 ---- (enunciado: quando eu era criança, eu era / tinha...)
+const WURS_ITENS=["Problemas de concentração, me distraía com facilidade.","Ansiosa, preocupada.","Nervosa, agitada.","Desatenta, distraída (\"no mundo da lua\").","Esquentada ou de pavio curto.","Acessos de raiva, ataques de fúria / birra.","Dificuldade de persistir e terminar o que começava.","Teimosa, cabeça-dura.","Triste ou \"para baixo\", deprimida, infeliz.","Desobediente com os pais, rebelde, atrevida.","Baixa opinião sobre mim mesma.","Irritável.","De humor instável, com altos e baixos.","Com raiva.","Agia sem pensar, impulsiva.","Tendência a ser imatura.","Sentimentos de culpa, arrependimento.","Perdia o controle de mim mesma.","Tendência a agir de forma irracional.","Impopular com outras crianças, não mantinha amizades.","Dificuldade de ver as coisas do ponto de vista do outro.","Problemas com autoridade / na escola, ia para a sala da direção.","No geral, aluna fraca, de aprendizado lento.","Dificuldade com matemática ou números.","Não rendia de acordo com o meu potencial."];
+
+// ---- DASS-21 ----
+const DASS_SUB={1:'S',2:'A',3:'D',4:'A',5:'D',6:'S',7:'A',8:'S',9:'A',10:'D',11:'S',12:'S',13:'D',14:'S',15:'A',16:'D',17:'D',18:'S',19:'A',20:'A',21:'D'};
+const DASS_ITENS=["Tive dificuldade de me acalmar.","Minha boca ficou seca.","Não tive nenhum sentimento positivo.","Tive dificuldade de respirar (falta de ar sem esforço físico).","Não consegui ter iniciativa para fazer as coisas.","Exagerei ao reagir a situações.","Tive tremedeira (por exemplo, nas mãos).","Senti que estava sempre nervosa.","Me preocupei com situações em que poderia entrar em pânico e parecer ridícula.","Senti que não tinha vontade de nada.","Me senti inquieta / agitada.","Tive dificuldade de relaxar.","Me senti deprimida e sem motivação.","Não conseguia tolerar nada que me impedisse de continuar o que estava fazendo.","Senti que ia entrar em pânico.","Nada me deixou entusiasmada.","Senti que eu era uma pessoa sem valor.","Senti que estava muito sensível / emotiva.","Percebi mudança nos meus batimentos cardíacos mesmo sem exercício.","Senti medo sem motivo.","Senti que a vida não tinha sentido."];
+
+// ---- DERS-36 ----
+const DERS_REV=new Set([1,2,6,7,8,10,17,20,22,24,34]);
+const DERS_ITENS=["Tenho clareza sobre meus sentimentos.","Presto atenção em como me sinto.","Vivencio minhas emoções como avassaladoras e fora de controle.","Não tenho ideia de como estou me sentindo.","Tenho dificuldade de dar sentido aos meus sentimentos.","Estou atenta aos meus sentimentos.","Sei exatamente como estou me sentindo.","Me importo com o que estou sentindo.","Fico confusa sobre como me sinto.","Quando estou chateada, reconheço minhas emoções.","Quando estou chateada, fico com raiva de mim mesma por me sentir assim.","Quando estou chateada, fico envergonhada por me sentir assim.","Quando estou chateada, tenho dificuldade de realizar minhas tarefas.","Quando estou chateada, fico fora de controle.","Quando estou chateada, acredito que ficarei assim por muito tempo.","Quando estou chateada, acredito que acabarei me sentindo muito deprimida.","Quando estou chateada, acredito que meus sentimentos são válidos e importantes.","Quando estou chateada, tenho dificuldade de me concentrar em outras coisas.","Quando estou chateada, me sinto fora de controle.","Quando estou chateada, ainda consigo realizar minhas tarefas.","Quando estou chateada, sinto vergonha de mim mesma por me sentir assim.","Quando estou chateada, sei que posso encontrar uma forma de, no fim, me sentir melhor.","Quando estou chateada, sinto que sou fraca.","Quando estou chateada, sinto que consigo manter o controle dos meus comportamentos.","Quando estou chateada, me sinto culpada por me sentir assim.","Quando estou chateada, tenho dificuldade de me concentrar.","Quando estou chateada, tenho dificuldade de controlar meus comportamentos.","Quando estou chateada, acredito que não há nada que eu possa fazer para me sentir melhor.","Quando estou chateada, fico irritada comigo mesma por me sentir assim.","Quando estou chateada, começo a me sentir muito mal comigo mesma.","Quando estou chateada, acredito que me afundar nisso é tudo o que posso fazer.","Quando estou chateada, perco o controle sobre meus comportamentos.","Quando estou chateada, tenho dificuldade de pensar em qualquer outra coisa.","Quando estou chateada, dedico um tempo para descobrir o que realmente sinto.","Quando estou chateada, levo muito tempo para me sentir melhor.","Quando estou chateada, minhas emoções parecem avassaladoras."];
+
+const INSTR=[
+{
+  id:'raads',titulo:'RAADS-R — Autismo adulto (completo, 80 itens)',org:'Ritvo et al. 2011',trad:'no',
+  mede:'A versão completa da triagem de autismo adulto: relação social, linguagem, sensório-motor e interesses. Responda pensando na vida toda.',
+  enun:'O quanto cada frase é verdadeira para você?',escala:ESC_RAADS,itens:RAADS_ITENS,
+  score(r){let s=0;r.forEach((v,i)=>{if(v==null)return;const w=[3,2,1,0][v];s+=RAADS_REV.has(i+1)?(3-w):w});return s;},
+  interpret(s){
+    if(s>=65)return{lvl:'high',txt:`<span class="score">${s} de 240</span>Acima do corte de ${65} consistente com traços autistas. Na validação original, nenhum adulto sem autismo passou de 64 (média de controles ~26; média de autistas ~134). Forte indicação de que vale uma avaliação especializada. Não é diagnóstico.`};
+    return{lvl:'mid',txt:`<span class="score">${s} de 240</span>Abaixo do corte (65). Em quem mascara muito, o RAADS pode vir mais baixo do que a experiência real — leia junto com o AQ-50 e o CAT-Q.`};
+  }
+},
+{
+  id:'aq50',titulo:'AQ-50 — Quociente do Espectro Autista (completo)',org:'Baron-Cohen et al. 2001',trad:'no',
+  mede:'O AQ completo (você fez o resumo de 10). 5 áreas: habilidade social, atenção, detalhes, comunicação, imaginação.',
+  enun:'O quanto você concorda com cada frase?',escala:ESC_AQ,itens:AQ_ITENS,
+  score(r){let c=0;r.forEach((v,i)=>{if(v==null)return;const ag=v<=1;const dir=AQ_DIR[i+1]==='A'?'A':'D';if((dir==='A'&&ag)||(dir==='D'&&!ag))c++});return c;},
+  interpret(s){
+    if(s>=32)return{lvl:'high',txt:`<span class="score">${s} de 50</span>Acima do corte clínico (32) de Baron-Cohen. ~80% das pessoas autistas atingem isso e só ~2% das não-autistas. Indicação relevante para avaliação. Não é diagnóstico.`};
+    if(s>=26)return{lvl:'mid',txt:`<span class="score">${s} de 50</span>Na faixa de traços presentes (26–31). Acima da média geral, abaixo do corte clínico (32). Vale observar junto com RAADS-R e CAT-Q.`};
+    return{lvl:'low',txt:`<span class="score">${s} de 50</span>Abaixo de 26 — faixa que costuma tornar autismo pouco provável neste instrumento (mas mascaramento pode rebaixar o escore).`};
+  }
+},
+{
+  id:'wurs',titulo:'WURS-25 — TDAH retrospectivo (infância)',org:'Ward et al. 1993',trad:'no',
+  mede:'Olha para a INFÂNCIA — peça-chave, porque TDAH exige sintomas que começaram cedo. Pense em como você era criança.',
+  enun:'Quando eu era criança, eu era (ou tinha)...',escala:ESC_WURS,itens:WURS_ITENS,
+  score(r){return r.reduce((a,b)=>a+(b||0),0);},
+  interpret(s){
+    if(s>=46)return{lvl:'high',txt:`<span class="score">${s} de 100</span>Acima do corte clássico (46). Sugere fortemente sintomas de TDAH já na infância — peça que costuma faltar na avaliação adulta. Leve isso ao psiquiatra. Não é diagnóstico.`};
+    if(s>=36)return{lvl:'mid',txt:`<span class="score">${s} de 100</span>Acima do corte de triagem (36), abaixo do clássico (46). Indica traços de TDAH na infância que valem investigar.`};
+    return{lvl:'low',txt:`<span class="score">${s} de 100</span>Abaixo do corte de triagem (36). Sintomas de TDAH na infância parecem menos proeminentes — coerente com o ASRS atual ter dado o sinal mais fraco.`};
+  }
+},
+{
+  id:'dass',titulo:'DASS-21 — Depressão, Ansiedade e Estresse',org:'Vignola & Tucci 2014 (PT-BR)',trad:'of',
+  mede:'Mais detalhado que GAD-7/PHQ-9: separa depressão, ansiedade e estresse. Referente à ÚLTIMA SEMANA.',
+  enun:'O quanto cada frase se aplicou a você na última semana?',escala:ESC_DASS,itens:DASS_ITENS,
+  result(r){
+    if(r.some(x=>x==null))return null;
+    const sub={D:0,A:0,S:0};r.forEach((v,i)=>{sub[DASS_SUB[i+1]]+=v});
+    const d=sub.D*2,a=sub.A*2,st=sub.S*2;
+    const band=(x,t)=>{const[l,m,sv,es]=t;return x<=l?['Normal','low']:x<=m?['Leve','mid']:x<=sv?['Moderado','mid']:x<=es?['Severo','high']:['Extremamente severo','high'];};
+    const bd=band(d,[9,13,20,27]),ba=band(a,[7,9,14,19]),bs=band(st,[14,18,25,33]);
+    const worst=[bd[1],ba[1],bs[1]].includes('high')?'high':[bd[1],ba[1],bs[1]].includes('mid')?'mid':'low';
+    const txt=`<span class="score">Depressão ${d} · Ansiedade ${a} · Estresse ${st}</span>
+      <table>
+      <tr><td>Depressão</td><td>${d}/42</td><td><strong>${bd[0]}</strong></td></tr>
+      <tr><td>Ansiedade</td><td>${a}/42</td><td><strong>${ba[0]}</strong></td></tr>
+      <tr><td>Estresse</td><td>${st}/42</td><td><strong>${bs[0]}</strong></td></tr>
+      </table>
+      <div style="margin-top:8px">Olhe a coluna de severidade. Lembre: estimulante + fase aguda elevam ansiedade e estresse. Leve ao psiquiatra. Não é diagnóstico.</div>`;
+    return{lvl:worst,txt};
+  }
+},
+{
+  id:'ders',titulo:'DERS-36 — Regulação emocional (completo)',org:'Gratz & Roemer 2004',trad:'no',
+  mede:'A versão completa (você fez a de 16). 6 dimensões: não aceitação, metas, impulsos, consciência, estratégias e clareza. Relevante para RSD e reações desproporcionais.',
+  enun:'O quanto cada frase se aplica a você?',escala:ESC_DERS,itens:DERS_ITENS,
+  score(r){let s=0;r.forEach((v,i)=>{if(v==null)return;const val=v+1;s+=DERS_REV.has(i+1)?(6-val):val});return s;},
+  interpret(s){
+    // sem corte clínico oficial — faixas descritivas sobre 36-180
+    if(s>=120)return{lvl:'high',txt:`<span class="score">${s} de 180</span>Dificuldade alta de regulação emocional. Sem corte clínico oficial — é dimensional. Ótimo número de base para acompanhar e ver as técnicas de DBT funcionando ao longo do tempo. Muito influenciado pela fase aguda.`};
+    if(s>=72)return{lvl:'mid',txt:`<span class="score">${s} de 180</span>Dificuldade moderada de regulação emocional.`};
+    return{lvl:'low',txt:`<span class="score">${s} de 180</span>Regulação emocional relativamente estável neste momento.`};
+  }
+},
+];
+
+const KEY='avaliacao_completa_v1';
+function loadAll(){return JSON.parse(localStorage.getItem(KEY)||'{}');}
+function saveAll(o){localStorage.setItem(KEY,JSON.stringify(o));}
+const store=loadAll();
+const answers={};
+INSTR.forEach(ins=>{answers[ins.id]=Array.isArray(store[ins.id])&&store[ins.id].length===ins.itens.length?store[ins.id]:new Array(ins.itens.length).fill(null);});
+
+const root=document.getElementById('instrumentos');
+INSTR.forEach(ins=>{
+  const card=document.createElement('section');card.className='card';card.id=ins.id;
+  card.innerHTML=`<div class="org">${ins.org}</div><h2>${ins.titulo}</h2>
+    <p class="mede">${ins.mede}</p>
+    <span class="trad ${ins.trad}">${ins.trad==='of'?'versão PT-BR validada':'tradução não-oficial'}</span>
+    <p class="enun">${ins.enun}</p>
+    <div class="count" id="count-${ins.id}"></div>
+    <div class="items"></div>
+    <button class="btn" style="margin-top:16px" data-calc="${ins.id}">Ver resultado</button>
+    <div class="result" id="res-${ins.id}"></div>`;
+  const box=card.querySelector('.items');
+  ins.itens.forEach((t,i)=>{
+    const d=document.createElement('div');d.className='item';
+    d.innerHTML=`<div class="qtext">${i+1}. ${t}</div><div class="opts">${ins.escala.map((op,j)=>`
+      <label data-ins="${ins.id}" data-i="${i}" data-j="${j}"><input type="radio" name="${ins.id}_${i}" value="${j}">${op}</label>`).join('')}</div>`;
+    box.appendChild(d);
+  });
+  root.appendChild(card);
+  // restaura seleções salvas
+  answers[ins.id].forEach((v,i)=>{if(v!=null){const l=card.querySelector(`label[data-i="${i}"][data-j="${v}"]`);if(l){l.classList.add('sel');l.querySelector('input').checked=true;}}});
+  updateCount(ins.id);
+});
+
+function updateCount(id){
+  const ins=INSTR.find(x=>x.id===id);const done=answers[id].filter(x=>x!=null).length;
+  document.getElementById('count-'+id).textContent=`${done} de ${ins.itens.length} respondidos`+(done===ins.itens.length?' ✓':'');
+}
+
+document.querySelectorAll('.opts label').forEach(l=>{
+  l.addEventListener('click',()=>{
+    const id=l.dataset.ins,i=+l.dataset.i,j=+l.dataset.j;
+    answers[id][i]=j;
+    const card=l.closest('.card');card.querySelectorAll(`label[data-i="${i}"]`).forEach(x=>x.classList.remove('sel'));
+    l.classList.add('sel');
+    store[id]=answers[id];saveAll(store);updateCount(id);
+  });
+});
+
+document.querySelectorAll('[data-calc]').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const ins=INSTR.find(x=>x.id===b.dataset.calc);const resp=answers[ins.id];
+    if(resp.some(x=>x==null)){alert('Faltam itens neste teste ('+resp.filter(x=>x==null).length+'). Você pode responder o resto depois — fica salvo.');return;}
+    const r=ins.result?ins.result(resp):ins.interpret(ins.score(resp));
+    const el=document.getElementById('res-'+ins.id);
+    el.className='result show '+r.lvl;el.innerHTML=r.txt+'<div style="margin-top:8px;font-size:.78rem;opacity:.8">Triagem, não diagnóstico.</div>';
+    el.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+});
+
+function coletar(){
+  const out=[];
+  INSTR.forEach(ins=>{
+    const resp=answers[ins.id];
+    if(resp.every(x=>x==null))return;
+    if(resp.some(x=>x==null)){out.push(`• ${ins.titulo}: incompleto (${resp.filter(x=>x!=null).length}/${ins.itens.length})`);return;}
+    const r=ins.result?ins.result(resp):ins.interpret(ins.score(resp));
+    const plain=r.txt.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+    out.push(`• ${ins.titulo}\n  ${plain}`);
+  });
+  return out;
+}
+function copiarResultados(){
+  const data=coletar();if(!data.length){alert('Responda ao menos um teste.');return;}
+  const txt='Resultados (aprofundados) — '+new Date().toLocaleString('pt-BR')+':\n\n'+data.join('\n\n')+'\n\n(Triagem, não diagnóstico.)';
+  navigator.clipboard.writeText(txt).then(()=>flash('Copiado ✓'));
+}
+function limparTudo(){
+  if(!confirm('Apagar TODAS as respostas desta página e recomeçar?'))return;
+  localStorage.removeItem(KEY);location.reload();
+}
+function flash(m){const e=document.getElementById('savedmsg');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2000);}
+</script>
+</body>
+</html>
