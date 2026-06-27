@@ -171,6 +171,20 @@
       <label>8. Como está a emoção AGORA? <span class="hint">(0–100%)</span></label>
       <input type="text" id="t_emofim" placeholder="ex: 40">
 
+      <div style="border-top:1px dashed var(--line);margin:20px 0 0;padding-top:14px">
+        <p class="lead" style="margin-bottom:0">Indo mais fundo 🕊️ <span class="hint">— opcional, quando quiser olhar além da emoção do momento</span></p>
+      </div>
+
+      <label>9. Que necessidade minha está por trás disso? <span class="hint">(toque nas que sentir e/ou escreva)</span></label>
+      <div class="chips" id="t_need"></div>
+      <textarea id="t_needtxt" placeholder="ex: eu precisava me sentir aceita e respeitada, não corrigida." style="margin-top:8px"></textarea>
+
+      <label>10. O que isso despertou em mim, além da emoção do momento? <span class="hint">— alguma ferida antiga, um padrão?</span></label>
+      <textarea id="t_desperta" placeholder="ex: mexeu no meu medo de não ser suficiente / de ser deixada."></textarea>
+
+      <label>11. Como Cristo responderia ao meu coração — antes mesmo de responder à situação?</label>
+      <textarea id="t_cristo" placeholder="ex: 'Filha, você é amada como é. Não precisa performar pra ser aceita.'"></textarea>
+
       <div class="btnrow">
         <button class="btn" onclick="salvarPensamento()">Salvar registro</button>
         <button class="btn ghost" onclick="limparPensamento()">Limpar</button>
@@ -292,9 +306,10 @@
 const KEY='diario_mente_v1';
 const DISTORCOES=['Leitura mental','Catastrofização','Tudo-ou-nada','Personalização','Filtro negativo','Raciocínio emocional','Deveria/tenho que','Adivinhação do futuro'];
 const ACOES=['Esperar 30 min antes de reagir','Respirar e voltar depois','Perguntar direto, sem acusar','Anotar e seguir o dia','Pedir um abraço','Não fazer nada agora'];
+const NECESSIDADES=['Aceitação','Pertencimento','Segurança','Descanso','Conexão','Autonomia','Reconhecimento','Respeito','Ser ouvida','Carinho','Espaço','Propósito'];
 
 // ---- estado de seleção ----
-const sel={humor:null,energia:null,ansiedade:null,dist:new Set(),acao:new Set()};
+const sel={humor:null,energia:null,ansiedade:null,dist:new Set(),acao:new Set(),need:new Set()};
 
 // monta chips
 function chips(container,arr,store){
@@ -307,6 +322,7 @@ function chips(container,arr,store){
 }
 chips('t_dist',DISTORCOES,sel.dist);
 chips('r_acao',ACOES,sel.acao);
+chips('t_need',NECESSIDADES,sel.need);
 
 // escalas
 document.querySelectorAll('.scale').forEach(s=>{
@@ -346,13 +362,15 @@ function salvarPensamento(){
   add({tipo:'Registro de pensamento',dados:{
     situacao:val('t_sit'),emocao:val('t_emo'),intensidade:val('t_emoint'),
     automatico:val('t_auto'),distorcoes:[...sel.dist],favor:val('t_fav'),
-    contra:val('t_contra'),equilibrado:val('t_bal'),emocaoFim:val('t_emofim')
+    contra:val('t_contra'),equilibrado:val('t_bal'),emocaoFim:val('t_emofim'),
+    necessidades:[...sel.need],necessidadeTxt:val('t_needtxt'),desperta:val('t_desperta'),cristo:val('t_cristo')
   }});
   flash('save_pens');limparPensamento();
 }
 function limparPensamento(){
-  ['t_sit','t_emo','t_emoint','t_auto','t_fav','t_contra','t_bal','t_emofim'].forEach(i=>document.getElementById(i).value='');
+  ['t_sit','t_emo','t_emoint','t_auto','t_fav','t_contra','t_bal','t_emofim','t_needtxt','t_desperta','t_cristo'].forEach(i=>document.getElementById(i).value='');
   sel.dist.clear();document.querySelectorAll('#t_dist .chip').forEach(c=>c.classList.remove('on'));
+  sel.need.clear();document.querySelectorAll('#t_need .chip').forEach(c=>c.classList.remove('on'));
 }
 function salvarRejeicao(){
   add({tipo:'Check de rejeição (RSD)',dados:{
@@ -387,6 +405,9 @@ function fmt(e){
     if(d.distorcoes&&d.distorcoes.length)l.push(`Distorções: ${d.distorcoes.join(', ')}`);
     if(d.contra)l.push(`Contra: ${d.contra}`);
     if(d.equilibrado)l.push(`Equilibrado: ${d.equilibrado}`);
+    if((d.necessidades&&d.necessidades.length)||d.necessidadeTxt)l.push(`Necessidade: ${[...(d.necessidades||[]),d.necessidadeTxt].filter(Boolean).join(' · ')}`);
+    if(d.desperta)l.push(`Despertou: ${d.desperta}`);
+    if(d.cristo)l.push(`Lente de Cristo: ${d.cristo}`);
   }else{
     if(d.gatilho)l.push(`Gatilho: ${d.gatilho} (${d.intensidade||'?'}%)`);
     if(d.releitura)l.push(`Releitura: ${d.releitura}`);
