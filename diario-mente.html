@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meu Diário · Mente & Calma</title>
+<title>Diário do Discipulado do Coração</title>
 <style>
   :root{
     --bg:#f6f3ee; --card:#fffdf9; --ink:#3b3a36; --soft:#7a766e;
@@ -79,7 +79,7 @@
 </head>
 <body>
 <header>
-  <h1>Meu espaço · mente & calma</h1>
+  <h1>Diário do Discipulado do Coração 🕊️</h1>
   <p>Privado, só seu. Tudo fica salvo neste navegador — ninguém mais vê.</p>
 </header>
 
@@ -152,6 +152,9 @@
         <div><input type="text" id="t_emo" placeholder="ex: rejeição, medo, vergonha"></div>
         <div><input type="text" id="t_emoint" placeholder="intensidade % (ex: 85)"></div>
       </div>
+
+      <label>Sinal físico <span class="hint">— o que senti no corpo? (peito, respiração, estômago, tensão...)</span></label>
+      <input type="text" id="t_fisico" placeholder="ex: aperto no peito, falta de ar, nó no estômago, ombros tensos">
 
       <label>3. Pensamento automático <span class="hint">— o que passou pela cabeça? Qual o "pior significado"?</span></label>
       <textarea id="t_auto" placeholder="ex: 'Ela está chateada comigo. Eu fiz algo errado. Vou perder essa relação.'"></textarea>
@@ -360,7 +363,7 @@ function salvarHoje(){
 }
 function salvarPensamento(){
   add({tipo:'Registro de pensamento',dados:{
-    situacao:val('t_sit'),emocao:val('t_emo'),intensidade:val('t_emoint'),
+    situacao:val('t_sit'),emocao:val('t_emo'),intensidade:val('t_emoint'),fisico:val('t_fisico'),
     automatico:val('t_auto'),distorcoes:[...sel.dist],favor:val('t_fav'),
     contra:val('t_contra'),equilibrado:val('t_bal'),emocaoFim:val('t_emofim'),
     necessidades:[...sel.need],necessidadeTxt:val('t_needtxt'),desperta:val('t_desperta'),cristo:val('t_cristo')
@@ -368,7 +371,7 @@ function salvarPensamento(){
   flash('save_pens');limparPensamento();
 }
 function limparPensamento(){
-  ['t_sit','t_emo','t_emoint','t_auto','t_fav','t_contra','t_bal','t_emofim','t_needtxt','t_desperta','t_cristo'].forEach(i=>document.getElementById(i).value='');
+  ['t_sit','t_emo','t_emoint','t_fisico','t_auto','t_fav','t_contra','t_bal','t_emofim','t_needtxt','t_desperta','t_cristo'].forEach(i=>document.getElementById(i).value='');
   sel.dist.clear();document.querySelectorAll('#t_dist .chip').forEach(c=>c.classList.remove('on'));
   sel.need.clear();document.querySelectorAll('#t_need .chip').forEach(c=>c.classList.remove('on'));
 }
@@ -401,6 +404,7 @@ function fmt(e){
   }else if(e.tipo==='Registro de pensamento'){
     if(d.situacao)l.push(`Situação: ${d.situacao}`);
     if(d.emocao)l.push(`Emoção: ${d.emocao} (${d.intensidade||'?'}%) → depois ${d.emocaoFim||'?'}%`);
+    if(d.fisico)l.push(`Sinal físico: ${d.fisico}`);
     if(d.automatico)l.push(`Pensamento: ${d.automatico}`);
     if(d.distorcoes&&d.distorcoes.length)l.push(`Distorções: ${d.distorcoes.join(', ')}`);
     if(d.contra)l.push(`Contra: ${d.contra}`);
